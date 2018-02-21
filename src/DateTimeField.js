@@ -1,26 +1,26 @@
-import React, { Component } from "react";
-import PropTypes from 'prop-types'
-import ReactDOM from "react-dom";
-import moment from "moment";
-import classnames from "classnames";
-import DateTimePicker from "./DateTimePicker.js";
-import Constants from "./Constants.js";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import ReactDOM from 'react-dom';
+import moment from 'moment';
+import classnames from 'classnames';
+import DateTimePicker from './DateTimePicker.js';
+import Constants from './Constants.js';
 
 export default class DateTimeField extends Component {
   static defaultProps = {
-    dateTime: moment().format("x"),
-    format: "x",
+    dateTime: moment().format('x'),
+    format: 'x',
     showToday: true,
-    viewMode: "days",
+    viewMode: 'days',
     daysOfWeekDisabled: [],
     inputRef: 'inputDateTime',
     size: Constants.SIZE_MEDIUM,
     mode: Constants.MODE_DATETIME,
-    onChange: (x) => {
+    onChange: x => {
       console.log(x);
     },
     onBlur: () => {},
-    onEnterKeyDown: () => {}
+    onEnterKeyDown: () => {},
   };
 
   constructor(props) {
@@ -38,105 +38,134 @@ export default class DateTimeField extends Component {
       showTimePicker: props.mode === Constants.MODE_TIME,
       inputDisplayFormat: this.resolvePropsInputDisplayFormat(),
       inputFormat: this.resolvePropsInputFormat(),
-      buttonIcon: props.mode === Constants.MODE_TIME ? "glyphicon-time" : "glyphicon-calendar",
+      buttonIcon:
+        props.mode === Constants.MODE_TIME
+          ? 'glyphicon-time'
+          : 'glyphicon-calendar',
       widgetStyle: {
-        display: "block",
-        position: "absolute",
+        display: 'block',
+        position: 'absolute',
         left: -9999,
-        zIndex: "9999 !important"
+        zIndex: '9999 !important',
       },
-      viewDate: moment(dateTime).startOf("month"),
+      viewDate: moment(dateTime).startOf('month'),
       selectedDate: moment(dateTime),
-      inputValue: props.dateTime ? moment(dateTime).format(this.resolvePropsInputDisplayFormat()) : '',
-      isValid: true
+      inputValue: props.dateTime
+        ? moment(dateTime).format(this.resolvePropsInputDisplayFormat())
+        : '',
+      isValid: true,
     };
   }
 
   getDefaultDateFormat = () => {
     switch (this.props.mode) {
       case Constants.MODE_TIME:
-        return "h:mm A";
+        return 'h:mm A';
       case Constants.MODE_DATE:
-        return "MM/DD/YY";
+        return 'MM/DD/YY';
       case Constants.MODE_MONTH:
-        return "MM/YY";
+        return 'MM/YY';
       default:
-        return "MM/DD/YY h:mm A";
+        return 'MM/DD/YY h:mm A';
     }
-  }
+  };
 
   resolvePropsInputDisplayFormat = (props = this.props) => {
     if (props.inputDisplayFormat) {
       return props.inputDisplayFormat;
-    } else if (props.inputFormat && (typeof props.inputFormat === 'string')) {
+    } else if (props.inputFormat && typeof props.inputFormat === 'string') {
       return props.inputFormat;
     } else if (props.inputFormat && Array.isArray(props.inputFormat)) {
-      return (props.inputFormat)[0];
+      return props.inputFormat[0];
     }
     return this.getDefaultDateFormat();
-  }
+  };
 
   resolvePropsInputFormat = () => {
     if (this.props.inputFormat) {
       return this.props.inputFormat;
     }
     return this.getDefaultDateFormat();
-  }
+  };
 
   static propTypes = {
     dateTime: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
-      PropTypes.instanceOf(moment)
+      PropTypes.instanceOf(moment),
     ]),
     onChange: PropTypes.func,
     onBlur: PropTypes.func,
     onEnterKeyDown: PropTypes.func,
     format: PropTypes.string,
     inputProps: PropTypes.object,
-    inputFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+    inputFormat: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+    ]),
     inputDisplayFormat: PropTypes.string,
     defaultText: PropTypes.string,
-    mode: PropTypes.oneOf([Constants.MODE_DATE, Constants.MODE_MONTH, Constants.MODE_DATETIME, Constants.MODE_TIME]),
+    mode: PropTypes.oneOf([
+      Constants.MODE_DATE,
+      Constants.MODE_MONTH,
+      Constants.MODE_DATETIME,
+      Constants.MODE_TIME,
+    ]),
     minDate: PropTypes.object,
     maxDate: PropTypes.object,
     direction: PropTypes.string,
     showToday: PropTypes.bool,
     viewMode: PropTypes.string,
-    size: PropTypes.oneOf([Constants.SIZE_SMALL, Constants.SIZE_MEDIUM, Constants.SIZE_LARGE]),
+    size: PropTypes.oneOf([
+      Constants.SIZE_SMALL,
+      Constants.SIZE_MEDIUM,
+      Constants.SIZE_LARGE,
+    ]),
     daysOfWeekDisabled: PropTypes.arrayOf(PropTypes.number),
     isValid: PropTypes.bool,
     name: PropTypes.string,
-    tabIndex: PropTypes.string
-  }
+    tabIndex: PropTypes.string,
+  };
 
-  componentWillReceiveProps = (nextProps) => {
-
+  componentWillReceiveProps = nextProps => {
     let state = {};
     state.inputDisplayFormat = this.resolvePropsInputDisplayFormat(nextProps);
 
-    if(!nextProps.dateTime){
+    if (!nextProps.dateTime) {
       var now = moment().format(nextProps.format);
-      state.viewDate = moment(now, nextProps.format, true).startOf("month");
+      state.viewDate = moment(now, nextProps.format, true).startOf('month');
       state.selectedDate = moment(now, nextProps.format, true);
       state.inputValue = '';
     } else if (moment.isMoment(nextProps.dateTime)) {
-      state.viewDate = moment(nextProps.dateTime).startOf("month");
+      state.viewDate = moment(nextProps.dateTime).startOf('month');
       state.selectedDate = moment(nextProps.dateTime);
-      state.inputValue = moment(nextProps.dateTime).format(state.inputDisplayFormat);
+      state.inputValue = moment(nextProps.dateTime).format(
+        state.inputDisplayFormat,
+      );
     } else if (moment(nextProps.dateTime, nextProps.format, true).isValid()) {
-      state.viewDate = moment(nextProps.dateTime, nextProps.format, true).startOf("month");
+      state.viewDate = moment(
+        nextProps.dateTime,
+        nextProps.format,
+        true,
+      ).startOf('month');
       state.selectedDate = moment(nextProps.dateTime, nextProps.format, true);
-      state.inputValue = moment(nextProps.dateTime, nextProps.format, true).format(state.inputDisplayFormat);
+      state.inputValue = moment(
+        nextProps.dateTime,
+        nextProps.format,
+        true,
+      ).format(state.inputDisplayFormat);
     }
     return this.setState(state);
-  }
+  };
 
   formatValueForEvent(eventName, event) {
     const value = event.target == null ? event : event.target.value;
     const inputDate = moment(value, this.state.inputFormat, true);
     const yearDigits = this.yearDigits(value);
-    const yearIsDone = yearDigits === 4 || (yearDigits === 2 && (eventName === 'onEnterKeyDown' || eventName === 'onBlur'));
+    const yearIsDone =
+      yearDigits === 4 ||
+      (yearDigits === 2 &&
+        (eventName === 'onEnterKeyDown' || eventName === 'onBlur'));
     let formatValue = value;
 
     this.setIsValid(this.checkIsValid(value));
@@ -144,18 +173,23 @@ export default class DateTimeField extends Component {
     if (yearIsDone && inputDate.isValid()) {
       this.setState({
         selectedDate: inputDate,
-        viewDate: inputDate.clone().startOf("month")
+        viewDate: inputDate.clone().startOf('month'),
       });
 
       formatValue = inputDate.format(this.state.inputDisplayFormat);
     }
 
-    return this.setState({
-      inputValue: (eventName === 'onChange' ? value : formatValue)
-    }, function () {
-      return this.props[eventName](inputDate.format(this.props.format), formatValue);
-    });
-
+    return this.setState(
+      {
+        inputValue: eventName === 'onChange' ? value : formatValue,
+      },
+      function() {
+        return this.props[eventName](
+          inputDate.format(this.props.format),
+          formatValue,
+        );
+      },
+    );
   }
 
   yearDigits(value) {
@@ -184,231 +218,344 @@ export default class DateTimeField extends Component {
     }
   };
 
-  checkIsValid = (value) => {
-    return moment(value, this.state.inputFormat, true).isValid() || value === this.props.defaultText || value === '';
-  }
+  checkIsValid = value => {
+    return (
+      moment(value, this.state.inputFormat, true).isValid() ||
+      value === this.props.defaultText ||
+      value === ''
+    );
+  };
 
-  setIsValid = (isValid) => {
+  setIsValid = isValid => {
     return this.setState({
-      isValid: isValid
-    })
-  }
+      isValid: isValid,
+    });
+  };
 
-  setSelectedMonth = (e) => {
+  setSelectedMonth = e => {
     const { target } = e;
     if (target.className && !target.className.match(/disabled/g)) {
       this.setIsValid(true);
-      return this.setState({
-        selectedDate: moment(this.state.viewDate.clone().toDate())
-          .month(e.target.innerHTML).date(1)
-          .hour(this.state.selectedDate.hours()).minute(this.state.selectedDate.minutes())
-      }, function () {
-        this.closePicker();
-        this.props.onChange(this.state.selectedDate.format(this.props.format));
-        return this.setState({
-          inputValue: this.state.selectedDate.format(this.state.inputDisplayFormat)
-        });
-      });
+      return this.setState(
+        {
+          selectedDate: moment(this.state.viewDate.clone().toDate())
+            .month(e.target.innerHTML)
+            .date(1)
+            .hour(this.state.selectedDate.hours())
+            .minute(this.state.selectedDate.minutes()),
+        },
+        function() {
+          this.closePicker();
+          this.props.onChange(
+            this.state.selectedDate.format(this.props.format),
+          );
+          return this.setState({
+            inputValue: this.state.selectedDate.format(
+              this.state.inputDisplayFormat,
+            ),
+          });
+        },
+      );
     }
-  }
+  };
 
-  setSelectedDate = (e) => {
+  setSelectedDate = e => {
     const { target } = e;
 
     if (target.className && !target.className.match(/disabled/g)) {
       this.setIsValid(true);
       let month;
-      if (target.className.indexOf("new") >= 0) month = this.state.viewDate.month() + 1;
-      else if (target.className.indexOf("old") >= 0) month = this.state.viewDate.month() - 1;
+      if (target.className.indexOf('new') >= 0)
+        month = this.state.viewDate.month() + 1;
+      else if (target.className.indexOf('old') >= 0)
+        month = this.state.viewDate.month() - 1;
       else month = this.state.viewDate.month();
-      return this.setState({
-        selectedDate: moment(this.state.viewDate).month(month).date(parseInt(e.target.innerHTML)).hour(this.state.selectedDate.hours()).minute(this.state.selectedDate.minutes())
-      }, function () {
+      return this.setState(
+        {
+          selectedDate: moment(this.state.viewDate)
+            .month(month)
+            .date(parseInt(e.target.innerHTML))
+            .hour(this.state.selectedDate.hours())
+            .minute(this.state.selectedDate.minutes()),
+        },
+        function() {
+          this.closePicker();
+          this.props.onChange(
+            this.state.selectedDate.format(this.props.format),
+          );
+          return this.setState({
+            inputValue: this.state.selectedDate.format(
+              this.state.inputDisplayFormat,
+            ),
+          });
+        },
+      );
+    }
+  };
+
+  setSelectedHour = e => {
+    this.setIsValid(true);
+    return this.setState(
+      {
+        selectedDate: this.state.selectedDate
+          .clone()
+          .hour(parseInt(e.target.innerHTML))
+          .minute(this.state.selectedDate.minutes()),
+      },
+      function() {
         this.closePicker();
         this.props.onChange(this.state.selectedDate.format(this.props.format));
         return this.setState({
-          inputValue: this.state.selectedDate.format(this.state.inputDisplayFormat)
+          inputValue: this.state.selectedDate.format(
+            this.state.inputDisplayFormat,
+          ),
         });
-      });
-    }
-  }
+      },
+    );
+  };
 
-  setSelectedHour = (e) => {
+  setSelectedMinute = e => {
     this.setIsValid(true);
-    return this.setState({
-      selectedDate: this.state.selectedDate.clone().hour(parseInt(e.target.innerHTML)).minute(this.state.selectedDate.minutes())
-    }, function () {
-      this.closePicker();
-      this.props.onChange(this.state.selectedDate.format(this.props.format));
-      return this.setState({
-        inputValue: this.state.selectedDate.format(this.state.inputDisplayFormat)
-      });
-    });
-  }
+    return this.setState(
+      {
+        selectedDate: this.state.selectedDate
+          .clone()
+          .hour(this.state.selectedDate.hours())
+          .minute(parseInt(e.target.innerHTML)),
+      },
+      function() {
+        this.closePicker();
+        this.props.onChange(this.state.selectedDate.format(this.props.format));
+        return this.setState({
+          inputValue: this.state.selectedDate.format(
+            this.state.inputDisplayFormat,
+          ),
+        });
+      },
+    );
+  };
 
-  setSelectedMinute = (e) => {
-    this.setIsValid(true);
+  setViewMonth = month => {
     return this.setState({
-      selectedDate: this.state.selectedDate.clone().hour(this.state.selectedDate.hours()).minute(parseInt(e.target.innerHTML))
-    }, function () {
-      this.closePicker();
-      this.props.onChange(this.state.selectedDate.format(this.props.format));
-      return this.setState({
-        inputValue: this.state.selectedDate.format(this.state.inputDisplayFormat)
-      });
+      viewDate: this.state.viewDate.clone().month(month),
     });
-  }
+  };
 
-  setViewMonth = (month) => {
+  setViewYear = year => {
     return this.setState({
-      viewDate: this.state.viewDate.clone().month(month)
+      viewDate: this.state.viewDate.clone().year(year),
     });
-  }
-
-  setViewYear = (year) => {
-    return this.setState({
-      viewDate: this.state.viewDate.clone().year(year)
-    });
-  }
+  };
 
   addMinute = () => {
-    return this.setState({
-      selectedDate: this.state.selectedDate.clone().add(1, "minutes")
-    }, function () {
-      this.props.onChange(this.state.selectedDate.format(this.props.format));
-      return this.setState({
-        inputValue: this.state.selectedDate.format(this.resolvePropsInputDisplayFormat())
-      });
-    });
-  }
+    return this.setState(
+      {
+        selectedDate: this.state.selectedDate.clone().add(1, 'minutes'),
+      },
+      function() {
+        this.props.onChange(this.state.selectedDate.format(this.props.format));
+        return this.setState({
+          inputValue: this.state.selectedDate.format(
+            this.resolvePropsInputDisplayFormat(),
+          ),
+        });
+      },
+    );
+  };
 
   addHour = () => {
-    return this.setState({
-      selectedDate: this.state.selectedDate.clone().add(1, "hours")
-    }, function () {
-      this.props.onChange(this.state.selectedDate.format(this.props.format));
-      return this.setState({
-        inputValue: this.state.selectedDate.format(this.resolvePropsInputDisplayFormat())
-      });
-    });
-  }
+    return this.setState(
+      {
+        selectedDate: this.state.selectedDate.clone().add(1, 'hours'),
+      },
+      function() {
+        this.props.onChange(this.state.selectedDate.format(this.props.format));
+        return this.setState({
+          inputValue: this.state.selectedDate.format(
+            this.resolvePropsInputDisplayFormat(),
+          ),
+        });
+      },
+    );
+  };
 
   addMonth = () => {
     return this.setState({
-      viewDate: this.state.viewDate.add(1, "months")
+      viewDate: this.state.viewDate.add(1, 'months'),
     });
-  }
+  };
 
   addYear = () => {
     return this.setState({
-      viewDate: this.state.viewDate.add(1, "years")
+      viewDate: this.state.viewDate.add(1, 'years'),
     });
-  }
+  };
 
   addDecade = () => {
     return this.setState({
-      viewDate: this.state.viewDate.add(10, "years")
+      viewDate: this.state.viewDate.add(10, 'years'),
     });
-  }
+  };
 
   subtractMinute = () => {
-    return this.setState({
-      selectedDate: this.state.selectedDate.clone().subtract(1, "minutes")
-    }, () => {
-      this.props.onChange(this.state.selectedDate.format(this.props.format));
-      return this.setState({
-        inputValue: this.state.selectedDate.format(this.resolvePropsInputDisplayFormat())
-      });
-    });
-  }
+    return this.setState(
+      {
+        selectedDate: this.state.selectedDate.clone().subtract(1, 'minutes'),
+      },
+      () => {
+        this.props.onChange(this.state.selectedDate.format(this.props.format));
+        return this.setState({
+          inputValue: this.state.selectedDate.format(
+            this.resolvePropsInputDisplayFormat(),
+          ),
+        });
+      },
+    );
+  };
 
   subtractHour = () => {
-    return this.setState({
-      selectedDate: this.state.selectedDate.clone().subtract(1, "hours")
-    }, () => {
-      this.props.onChange(this.state.selectedDate.format(this.props.format));
-      return this.setState({
-        inputValue: this.state.selectedDate.format(this.resolvePropsInputDisplayFormat())
-      });
-    });
-  }
+    return this.setState(
+      {
+        selectedDate: this.state.selectedDate.clone().subtract(1, 'hours'),
+      },
+      () => {
+        this.props.onChange(this.state.selectedDate.format(this.props.format));
+        return this.setState({
+          inputValue: this.state.selectedDate.format(
+            this.resolvePropsInputDisplayFormat(),
+          ),
+        });
+      },
+    );
+  };
 
   subtractMonth = () => {
     return this.setState({
-      viewDate: this.state.viewDate.subtract(1, "months")
+      viewDate: this.state.viewDate.subtract(1, 'months'),
     });
-  }
+  };
 
   subtractYear = () => {
     return this.setState({
-      viewDate: this.state.viewDate.subtract(1, "years")
+      viewDate: this.state.viewDate.subtract(1, 'years'),
     });
-  }
+  };
 
   subtractDecade = () => {
     return this.setState({
-      viewDate: this.state.viewDate.subtract(10, "years")
+      viewDate: this.state.viewDate.subtract(10, 'years'),
     });
-  }
+  };
 
   togglePeriod = () => {
     if (this.state.selectedDate.hour() > 12) {
-      return this.onChange(this.state.selectedDate.clone().subtract(12, "hours").format(this.state.inputDisplayFormat));
+      return this.onChange(
+        this.state.selectedDate
+          .clone()
+          .subtract(12, 'hours')
+          .format(this.state.inputDisplayFormat),
+      );
     } else {
-      return this.onChange(this.state.selectedDate.clone().add(12, "hours").format(this.state.inputDisplayFormat));
+      return this.onChange(
+        this.state.selectedDate
+          .clone()
+          .add(12, 'hours')
+          .format(this.state.inputDisplayFormat),
+      );
     }
-  }
+  };
 
   togglePicker = () => {
     return this.setState({
       showDatePicker: !this.state.showDatePicker,
-      showTimePicker: !this.state.showTimePicker
+      showTimePicker: !this.state.showTimePicker,
     });
-  }
+  };
 
   setToday = () => {
     var today = moment();
-    if (this.props.dateTime && moment.isMoment(this.props.dateTime) && this.props.dateTime.isUtc()) {
+    if (
+      this.props.dateTime &&
+      moment.isMoment(this.props.dateTime) &&
+      this.props.dateTime.isUtc()
+    ) {
       today.utc();
     }
     this.setIsValid(true);
-    return this.setState({
-      selectedDate: today,
-    }, function () {
-      this.closePicker();
-      this.props.onChange(today);
-      return this.setState({
-        inputValue: this.state.selectedDate.format(this.resolvePropsInputDisplayFormat())
-      });
-    });
-  }
+    return this.setState(
+      {
+        selectedDate: today,
+      },
+      function() {
+        this.closePicker();
+        this.props.onChange(today);
+        return this.setState({
+          inputValue: this.state.selectedDate.format(
+            this.resolvePropsInputDisplayFormat(),
+          ),
+        });
+      },
+    );
+  };
 
-  calculatePosition = (options) => {
-    let classes, gBCR, offset, placePosition, scrollTop, styles, widgetOffsetHeight, clientHeight, height;
+  calculatePosition = options => {
+    let classes,
+      gBCR,
+      offset,
+      placePosition,
+      scrollTop,
+      styles,
+      widgetOffsetHeight,
+      clientHeight,
+      height;
 
     classes = {};
     if (options) {
-      classes["months"] = options.monthsDisplayed;
-      classes["years"] = options.yearsDisplayed;
-      classes["days"] = options.daysDisplayed;
-      classes["time"] = options.timeDisplayed;
+      classes['months'] = options.monthsDisplayed;
+      classes['years'] = options.yearsDisplayed;
+      classes['days'] = options.daysDisplayed;
+      classes['time'] = options.timeDisplayed;
     }
     gBCR = this.refs.dtpbutton.getBoundingClientRect();
 
     offset = {
       top: gBCR.top + window.pageYOffset - document.documentElement.clientTop,
-      left: 0
+      left: 0,
     };
     offset.top = offset.top + this.refs.datetimepicker.offsetHeight;
     //Support for both old version of react and new version (v1.4.2) of react
     //The new version of react return the child refs as a component rather than a DomNode
-    widgetOffsetHeight = this.refs.widget.offsetHeight || ReactDOM.findDOMNode(this.refs.widget).offsetHeight;
-    clientHeight = this.refs.widget.clientHeight || ReactDOM.findDOMNode(this.refs.widget).clientHeight;
-    height = this.refs.widget.height || ReactDOM.findDOMNode(this.refs.widget).height;
+    widgetOffsetHeight =
+      this.refs.widget.offsetHeight ||
+      ReactDOM.findDOMNode(this.refs.widget).offsetHeight;
+    clientHeight =
+      this.refs.widget.clientHeight ||
+      ReactDOM.findDOMNode(this.refs.widget).clientHeight;
+    height =
+      this.refs.widget.height || ReactDOM.findDOMNode(this.refs.widget).height;
 
-    scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-    placePosition = this.props.direction === "up" ? "top" : this.props.direction === "bottom" ? "bottom" : this.props.direction === "auto" ? offset.top + widgetOffsetHeight > window.offsetHeight + scrollTop && widgetOffsetHeight + this.refs.datetimepicker.offsetHeight > offset.top ? "top" : "bottom" : void 0;
-    if (placePosition === "top") {
+    scrollTop =
+      window.pageYOffset !== undefined
+        ? window.pageYOffset
+        : (
+            document.documentElement ||
+            document.body.parentNode ||
+            document.body
+          ).scrollTop;
+    placePosition =
+      this.props.direction === 'up'
+        ? 'top'
+        : this.props.direction === 'bottom'
+          ? 'bottom'
+          : this.props.direction === 'auto'
+            ? offset.top + widgetOffsetHeight >
+                window.offsetHeight + scrollTop &&
+              widgetOffsetHeight + this.refs.datetimepicker.offsetHeight >
+                offset.top
+              ? 'top'
+              : 'bottom'
+            : void 0;
+    if (placePosition === 'top') {
       offset.top = -widgetOffsetHeight - 2;
       classes.top = true;
       classes.bottom = false;
@@ -418,18 +565,17 @@ export default class DateTimeField extends Component {
       classes.bottom = true;
     }
     styles = {
-      display: "block",
-      position: "absolute",
+      display: 'block',
+      position: 'absolute',
       top: offset.top,
       left: offset.left,
-      right: 40
+      right: 40,
     };
     return this.setState({
       widgetStyle: styles,
-      widgetClasses: classes
+      widgetClasses: classes,
     });
-
-  }
+  };
 
   onClick = () => {
     let displayOptions = {};
@@ -438,49 +584,49 @@ export default class DateTimeField extends Component {
       return this.closePicker();
     } else {
       this.setState({
-        showPicker: true
+        showPicker: true,
       });
-      displayOptions.yearsDisplayed = (this.props.mode === 'year');
-      displayOptions.monthsDisplayed = (this.props.mode === 'month');
-      displayOptions.daysDisplayed = (this.props.mode === 'date');
-      displayOptions.timeDisplayed = (this.props.mode === 'time');
+      displayOptions.yearsDisplayed = this.props.mode === 'year';
+      displayOptions.monthsDisplayed = this.props.mode === 'month';
+      displayOptions.daysDisplayed = this.props.mode === 'date';
+      displayOptions.timeDisplayed = this.props.mode === 'time';
 
       this.calculatePosition(displayOptions);
     }
-  }
+  };
 
   closePicker = () => {
-    let style = {...this.state.widgetStyle};
+    let style = { ...this.state.widgetStyle };
     style.left = -9999;
-    style.display = "block";
+    style.display = 'block';
     return this.setState({
       showPicker: false,
-      widgetStyle: style
+      widgetStyle: style,
     });
-  }
+  };
 
   size = () => {
     switch (this.props.size) {
       case Constants.SIZE_SMALL:
-        return "form-group-sm";
+        return 'form-group-sm';
       case Constants.SIZE_LARGE:
-        return "form-group-lg";
+        return 'form-group-lg';
     }
 
-    return "";
-  }
+    return '';
+  };
 
   renderOverlay = () => {
     const styles = {
-      position: "fixed",
+      position: 'fixed',
       top: 0,
       bottom: 0,
       left: 0,
       right: 0,
-      zIndex: "999"
+      zIndex: '999',
     };
     if (this.state.showPicker) {
-      return (<div onClick={this.closePicker} style={styles}/>);
+      return <div onClick={this.closePicker} style={styles} />;
     } else {
       return <span />;
     }
@@ -525,8 +671,12 @@ export default class DateTimeField extends Component {
           widgetStyle={this.state.widgetStyle}
           calculatePosition={this.calculatePosition}
         />
-        <div className={classnames("input-group date " + this.size(), {"has-error": !this.state.isValid})}
-             ref="datetimepicker">
+        <div
+          className={classnames('input-group date ' + this.size(), {
+            'has-error': !this.state.isValid,
+          })}
+          ref="datetimepicker"
+        >
           <input
             className="form-control"
             onChange={this.onChange}
@@ -540,8 +690,13 @@ export default class DateTimeField extends Component {
             placeholder={this.props.defaultText}
             {...this.props.inputProps}
           />
-          <span className="input-group-addon" onBlur={this.onBlur} onClick={this.onClick} ref="dtpbutton">
-            <span className={classnames("glyphicon", this.state.buttonIcon)}/>
+          <span
+            className="input-group-addon"
+            onBlur={this.onBlur}
+            onClick={this.onClick}
+            ref="dtpbutton"
+          >
+            <span className={classnames('glyphicon', this.state.buttonIcon)} />
           </span>
         </div>
       </div>
