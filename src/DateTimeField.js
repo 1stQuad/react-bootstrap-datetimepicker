@@ -48,10 +48,10 @@ export default class DateTimeField extends Component {
         left: -9999,
         zIndex: '9999 !important',
       },
-      viewDate: moment(dateTime).startOf('month'),
-      selectedDate: moment(dateTime),
+      viewDate: moment(dateTime, this.props.format).startOf('month'),
+      selectedDate: moment(dateTime, this.props.format),
       inputValue: props.dateTime
-        ? moment(dateTime).format(this.resolvePropsInputDisplayFormat())
+        ? moment(dateTime, this.props.format).format(this.resolvePropsInputDisplayFormat())
         : '',
       isValid: true,
     };
