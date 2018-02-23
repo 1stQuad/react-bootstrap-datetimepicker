@@ -19,6 +19,7 @@ export default class DateTimePickerDays extends Component {
 
   static defaultProps = {
     showToday: true,
+    daysOfWeekDisabled: [],
   };
 
   renderDays = () => {

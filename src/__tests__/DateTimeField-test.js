@@ -1,11 +1,12 @@
 import React from 'react';
-import TestUtils from 'react-addons-test-utils';
+import TestUtils from 'react-dom/test-utils';
+import ShallowRenderer from 'react-test-renderer/shallow';
 
 jest.dontMock('moment');
 jest.dontMock('../DateTimeField.js');
 
 function shallowRender(component) {
-  const shallowRenderer = TestUtils.createRenderer();
+  const shallowRenderer = new ShallowRenderer();
   shallowRenderer.render(component);
   return shallowRenderer.getRenderOutput();
 }
@@ -56,18 +57,22 @@ describe('DateTimeField', function() {
   describe('When changing props', function() {
     beforeEach(() => {
       TestParent = React.createFactory(
-        React.createClass({
-          getInitialState() {
-            return {
+        class extends React.Component {
+          static displayName = 'AnonymousTestComponent';
+
+          constructor(props) {
+            super(props);
+
+            this.state = {
               dateTime: happyDate.format('x'),
               ...this.props,
             };
-          },
+          }
 
           render() {
             return <DateTimeField {...this.state} />;
-          },
-        }),
+          }
+        },
       );
       createParent = (initalState) => TestUtils.renderIntoDocument(TestParent(initalState)); // eslint-disable-line
     });
@@ -162,18 +167,6 @@ describe('DateTimeField', function() {
       TestUtils.Simulate.blur(input);
 
       expect(onBlurMock.mock.calls.length).toBe(1);
-    });
-
-    it('should use the default ref on the input field', function() {
-      const component = shallowRender(<DateTimeField />);
-      let children = component.props.children[2];
-      expect(children.props.children[0].ref).toBe('inputDateTime');
-    });
-
-    it('should use the provided ref on the input field', function() {
-      const component = shallowRender(<DateTimeField inputRef="foo" />);
-      let children = component.props.children[2];
-      expect(children.props.children[0].ref).toBe('foo');
     });
   });
 

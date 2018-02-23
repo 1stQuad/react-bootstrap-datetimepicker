@@ -14,8 +14,8 @@
     "minor-release": "cross-env RELEASE=minor npm run release",
     "major-release": "cross-env RELEASE=major npm run release",
     "build-npm": "babel --stage 0 ./src -d ./lib --ignore __tests__/*",
-    "build": "cross-env NODE_ENV=production webpack --output-file react-bootstrap-datetimepicker.js",
-    "build-min": "cross-env NODE_ENV=production COMPRESS=1 webpack --output-file react-bootstrap-datetimepicker.min.js",
+    "build": "cross-env NODE_ENV=production webpack --output-filename react-bootstrap-datetimepicker.js",
+    "build-min": "cross-env NODE_ENV=production COMPRESS=1 webpack --output-filename react-bootstrap-datetimepicker.min.js",
     "examples": "webpack-dev-server --config ./examples/webpack.config.js",
     "test": "jest",
     "lint": "eslint src --fix"
@@ -36,27 +36,7 @@
     "react": ">=16.0"
   },
   "jest": {
-    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
-    "unmockedModulePathPatterns": [
-      "core-js/.*",
-      "<rootDir>/node_modules/react",
-      "babel",
-      "<rootDir>/node_modules/babel",
-      "<rootDir>/node_modules/react-dom",
-      "<rootDir>/node_modules/react-addons-test-utils",
-      "<rootDir>/node_modules/fbjs"
-    ],
-    "setupEnvScriptFile": "<rootDir>/jestEnvironment.js",
-    "testFileExtensions": [
-      "es6",
-      "js"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "es6"
-    ],
-    "testPathDirs": [
+    "roots": [
       "src/"
     ]
   },
@@ -71,7 +51,6 @@
     "eslint": "^4.18.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-react": "^1.1.7",
-    "eslint-plugin-jasmine": "^1.1.0",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.7.0",
     "grunt": "~0.4.2",
@@ -87,13 +66,14 @@
     "grunt-shell": "~0.6.4",
     "html-webpack-plugin": "^1.1.0",
     "husky": "^0.14.3",
-    "jest-cli": "^0.5.0",
+    "jest": "^22.4.2",
+    "jest-cli": "^22.4.2",
     "jsx-loader": "^0.12.2",
     "lint-staged": "^7.0.0",
     "prettier": "^1.10.2",
     "react": "^16.2.0",
-    "react-addons-test-utils": "^15.6.2",
     "react-dom": "^16.2.0",
+    "react-test-renderer": "^16.2.0",
     "requirejs": "~2.1.9",
     "webpack": "^1.5.1",
     "webpack-dev-server": "^1.7.0"

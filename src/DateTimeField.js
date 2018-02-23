@@ -98,6 +98,7 @@ export default class DateTimeField extends Component {
     onBlur: PropTypes.func,
     onEnterKeyDown: PropTypes.func,
     format: PropTypes.string,
+    inputRef: PropTypes.string,
     inputProps: PropTypes.object,
     inputFormat: PropTypes.oneOfType([
       PropTypes.string,
@@ -516,23 +517,22 @@ export default class DateTimeField extends Component {
       classes['days'] = options.daysDisplayed;
       classes['time'] = options.timeDisplayed;
     }
-    gBCR = this.refs.dtpbutton.getBoundingClientRect();
+    gBCR = this.dtpbutton.getBoundingClientRect();
 
     offset = {
       top: gBCR.top + window.pageYOffset - document.documentElement.clientTop,
       left: 0,
     };
-    offset.top = offset.top + this.refs.datetimepicker.offsetHeight;
+    offset.top = offset.top + this.datetimepicker.offsetHeight;
     //Support for both old version of react and new version (v1.4.2) of react
     //The new version of react return the child refs as a component rather than a DomNode
     widgetOffsetHeight =
-      this.refs.widget.offsetHeight ||
-      ReactDOM.findDOMNode(this.refs.widget).offsetHeight;
+      this.widget.offsetHeight ||
+      ReactDOM.findDOMNode(this.widget).offsetHeight; // eslint-disable-line react/no-find-dom-node
     clientHeight =
-      this.refs.widget.clientHeight ||
-      ReactDOM.findDOMNode(this.refs.widget).clientHeight;
-    height =
-      this.refs.widget.height || ReactDOM.findDOMNode(this.refs.widget).height;
+      this.widget.clientHeight ||
+      ReactDOM.findDOMNode(this.widget).clientHeight; // eslint-disable-line react/no-find-dom-node
+    height = this.widget.height || ReactDOM.findDOMNode(this.widget).height; // eslint-disable-line react/no-find-dom-node
 
     scrollTop =
       window.pageYOffset !== undefined
@@ -550,8 +550,7 @@ export default class DateTimeField extends Component {
           : this.props.direction === 'auto'
             ? offset.top + widgetOffsetHeight >
                 window.offsetHeight + scrollTop &&
-              widgetOffsetHeight + this.refs.datetimepicker.offsetHeight >
-                offset.top
+              widgetOffsetHeight + this.datetimepicker.offsetHeight > offset.top
               ? 'top'
               : 'bottom'
             : void 0;
@@ -646,7 +645,9 @@ export default class DateTimeField extends Component {
           maxDate={this.props.maxDate}
           minDate={this.props.minDate}
           mode={this.props.mode}
-          ref="widget"
+          ref={el => {
+            this.widget = el;
+          }}
           selectedDate={this.state.selectedDate}
           setSelectedMonth={this.setSelectedMonth}
           setSelectedDate={this.setSelectedDate}
@@ -675,7 +676,9 @@ export default class DateTimeField extends Component {
           className={classnames('input-group date ' + this.size(), {
             'has-error': !this.state.isValid,
           })}
-          ref="datetimepicker"
+          ref={el => {
+            this.datetimepicker = el;
+          }}
         >
           <input
             className="form-control"
@@ -684,7 +687,9 @@ export default class DateTimeField extends Component {
             type="text"
             tabIndex={this.props.tabIndex}
             value={this.state.inputValue}
-            ref={this.props.inputRef}
+            ref={el => {
+              this[this.props.inputRef] = el;
+            }}
             onKeyDown={this.onKeyDown}
             name={this.props.name}
             placeholder={this.props.defaultText}
@@ -694,7 +699,9 @@ export default class DateTimeField extends Component {
             className="input-group-addon"
             onBlur={this.onBlur}
             onClick={this.onClick}
-            ref="dtpbutton"
+            ref={el => {
+              this.dtpbutton = el;
+            }}
           >
             <span className={classnames('glyphicon', this.state.buttonIcon)} />
           </span>
