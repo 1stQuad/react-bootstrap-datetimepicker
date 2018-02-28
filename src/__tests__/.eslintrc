@@ -1,11 +1,8 @@
 {
   "env": {
-    "jasmine": true
+    "jest": true
   },
   "globals": {
-    "jest": false
-  },
-  plugins: [
-    "jasmine"
-  ]
+    "jest": true
+  }
 }

@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import PropTypes from 'prop-types'
-import moment from "moment";
-import classnames from "classnames";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import moment from 'moment';
+import classnames from 'classnames';
 
 export default class DateTimePickerDays extends Component {
   static propTypes = {
@@ -14,79 +14,135 @@ export default class DateTimePickerDays extends Component {
     setSelectedDate: PropTypes.func.isRequired,
     showMonths: PropTypes.func.isRequired,
     minDate: PropTypes.object,
-    maxDate: PropTypes.object
-  }
+    maxDate: PropTypes.object,
+  };
 
   static defaultProps = {
-    showToday: true
-  }
+    showToday: true,
+    daysOfWeekDisabled: [],
+  };
 
   renderDays = () => {
-    var cells, classes, days, html, month, nextMonth, prevMonth, minDate, maxDate, row, year;
+    var cells,
+      classes,
+      days,
+      html,
+      month,
+      nextMonth,
+      prevMonth,
+      minDate,
+      maxDate,
+      row,
+      year;
     year = this.props.viewDate.year();
     month = this.props.viewDate.month();
-    prevMonth = this.props.viewDate.clone().subtract(1, "months");
+    prevMonth = this.props.viewDate.clone().subtract(1, 'months');
     days = prevMonth.daysInMonth();
-    prevMonth.date(days).startOf("week");
-    nextMonth = moment(prevMonth).clone().add(42, "d");
-    minDate = this.props.minDate ? this.props.minDate.clone().subtract(1, "days") : this.props.minDate;
-    maxDate = this.props.maxDate ? this.props.maxDate.clone() : this.props.maxDate;
+    prevMonth.date(days).startOf('week');
+    nextMonth = moment(prevMonth)
+      .clone()
+      .add(42, 'd');
+    minDate = this.props.minDate
+      ? this.props.minDate.clone().subtract(1, 'days')
+      : this.props.minDate;
+    maxDate = this.props.maxDate
+      ? this.props.maxDate.clone()
+      : this.props.maxDate;
     html = [];
     cells = [];
     while (prevMonth.isBefore(nextMonth)) {
       classes = {
-        day: true
+        day: true,
       };
-      if (prevMonth.year() < year || (prevMonth.year() === year && prevMonth.month() < month)) {
+      if (
+        prevMonth.year() < year ||
+        (prevMonth.year() === year && prevMonth.month() < month)
+      ) {
         classes.old = true;
-      } else if (prevMonth.year() > year || (prevMonth.year() === year && prevMonth.month() > month)) {
+      } else if (
+        prevMonth.year() > year ||
+        (prevMonth.year() === year && prevMonth.month() > month)
+      ) {
         classes.new = true;
       }
-      if (prevMonth.isSame(moment({
-        y: this.props.selectedDate.year(),
-        M: this.props.selectedDate.month(),
-        d: this.props.selectedDate.date()
-      }))) {
+      if (
+        prevMonth.isSame(
+          moment({
+            y: this.props.selectedDate.year(),
+            M: this.props.selectedDate.month(),
+            d: this.props.selectedDate.date(),
+          }),
+        )
+      ) {
         classes.active = true;
       }
       if (this.props.showToday) {
-        if (prevMonth.isSame(moment(), "day")) {
+        if (prevMonth.isSame(moment(), 'day')) {
           classes.today = true;
         }
       }
-      if ((minDate && prevMonth.isBefore(minDate)) || (maxDate && prevMonth.isAfter(maxDate))) {
+      if (
+        (minDate && prevMonth.isBefore(minDate)) ||
+        (maxDate && prevMonth.isAfter(maxDate))
+      ) {
         classes.softDisabled = true;
       }
-      if (this.props.daysOfWeekDisabled.length > 0) classes.softDisabled = this.props.daysOfWeekDisabled.indexOf(prevMonth.day()) !== -1;
-      cells.push(<td className={classnames(classes)} key={prevMonth.month() + "-" + prevMonth.date()} onClick={this.props.setSelectedDate}>{prevMonth.date()}</td>);
-      if (prevMonth.weekday() === moment().endOf("week").weekday()) {
-        row = <tr key={prevMonth.month() + "-" + prevMonth.date()}>{cells}</tr>;
+      if (this.props.daysOfWeekDisabled.length > 0)
+        classes.softDisabled =
+          this.props.daysOfWeekDisabled.indexOf(prevMonth.day()) !== -1;
+      cells.push(
+        <td
+          className={classnames(classes)}
+          key={prevMonth.month() + '-' + prevMonth.date()}
+          onClick={this.props.setSelectedDate}
+        >
+          {prevMonth.date()}
+        </td>,
+      );
+      if (
+        prevMonth.weekday() ===
+        moment()
+          .endOf('week')
+          .weekday()
+      ) {
+        row = <tr key={prevMonth.month() + '-' + prevMonth.date()}>{cells}</tr>;
         html.push(row);
         cells = [];
       }
       const tmpPrevMonth = prevMonth.clone();
-      prevMonth.add(1, "d");
+      prevMonth.add(1, 'd');
 
       // handle a bug in JS engine of PhantomJS where if a day in the month is Daylight Saving Time,
       // when adding a day, it'll return the same day but the hour is changed to 23:00.
       if (tmpPrevMonth.date() === prevMonth.date()) {
-        prevMonth.add(1, "h");
+        prevMonth.add(1, 'h');
       }
     }
     return html;
-  }
+  };
 
   render() {
     return (
-    <div className="datepicker-days" style={{display: "block"}}>
+      <div className="datepicker-days" style={{ display: 'block' }}>
         <table className="table-condensed">
           <thead>
             <tr>
-              <th className="prev" onClick={this.props.subtractMonth}><span className="glyphicon glyphicon-chevron-left" /></th>
+              <th className="prev" onClick={this.props.subtractMonth}>
+                <span className="glyphicon glyphicon-chevron-left" />
+              </th>
 
-              <th className="switch" colSpan="5" onClick={this.props.showMonths}>{moment.months()[this.props.viewDate.month()]} {this.props.viewDate.year()}</th>
+              <th
+                className="switch"
+                colSpan="5"
+                onClick={this.props.showMonths}
+              >
+                {moment.months()[this.props.viewDate.month()]}{' '}
+                {this.props.viewDate.year()}
+              </th>
 
-              <th className="next" onClick={this.props.addMonth}><span className="glyphicon glyphicon-chevron-right" /></th>
+              <th className="next" onClick={this.props.addMonth}>
+                <span className="glyphicon glyphicon-chevron-right" />
+              </th>
             </tr>
 
             <tr>
@@ -106,9 +162,7 @@ export default class DateTimePickerDays extends Component {
             </tr>
           </thead>
 
-          <tbody>
-            {this.renderDays()}
-          </tbody>
+          <tbody>{this.renderDays()}</tbody>
         </table>
       </div>
     );
