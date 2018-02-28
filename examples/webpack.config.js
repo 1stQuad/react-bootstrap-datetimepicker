@@ -12,7 +12,8 @@ module.exports = {
     filename: "[name].js",
     chunkFilename: "[id].chunk.js",
     sourceMapFilename: "[name].map",
-    assetPath: "/"
+    assetPath: "/",
+    publicPath:""
   },
 
   resolve: {
