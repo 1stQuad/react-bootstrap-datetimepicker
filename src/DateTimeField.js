@@ -526,6 +526,7 @@ export default class DateTimeField extends Component {
           calculatePosition={this.calculatePosition}
         />
         <div className={classnames("input-group date " + this.size(), {"has-error": !this.state.isValid})}
+             onClick={this.onClick}
              ref="datetimepicker">
           <input
             className="form-control"
@@ -540,7 +541,7 @@ export default class DateTimeField extends Component {
             placeholder={this.props.defaultText}
             {...this.props.inputProps}
           />
-          <span className="input-group-addon" onBlur={this.onBlur} onClick={this.onClick} ref="dtpbutton">
+          <span className="input-group-addon" onBlur={this.onBlur} ref="dtpbutton">
             <span className={classnames("glyphicon", this.state.buttonIcon)}/>
           </span>
         </div>

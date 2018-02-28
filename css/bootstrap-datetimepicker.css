@@ -11,6 +11,11 @@
   z-index: 99999 !important;
   border-radius: 4px;
 }
+
+.bootstrap-datetimepicker-wrap{
+  position: relative;
+}
+
 .bootstrap-datetimepicker-widget.timepicker-sbs {
   width: 600px;
 }
