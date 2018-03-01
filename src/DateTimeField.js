@@ -636,7 +636,6 @@ export default class DateTimeField extends Component {
   };
 
   render() {
-    console.log(this.props.disabled);
     return (
       <div className="bootstrap-datetimepicker-wrap"
            ref={el => {
