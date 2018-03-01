@@ -9,6 +9,8 @@ export default class DateTimePicker extends Component {
   static propTypes = {
     showDatePicker: PropTypes.bool,
     showTimePicker: PropTypes.bool,
+    showPeriod: PropTypes.bool,
+    disabled: PropTypes.bool,
     subtractMonth: PropTypes.func.isRequired,
     addMonth: PropTypes.func.isRequired,
     viewDate: PropTypes.object.isRequired,
@@ -97,6 +99,7 @@ export default class DateTimePicker extends Component {
             addHour={this.props.addHour}
             addMinute={this.props.addMinute}
             mode={this.props.mode}
+            showPeriod={this.props.showPeriod}
             selectedDate={this.props.selectedDate}
             setSelectedHour={this.props.setSelectedHour}
             setSelectedMinute={this.props.setSelectedMinute}
@@ -120,10 +123,10 @@ export default class DateTimePicker extends Component {
         >
           <span
             className={classNames(
-              'glyphicon',
+              'fa',
               this.props.showTimePicker
-                ? 'glyphicon-calendar'
-                : 'glyphicon-time',
+                ? 'fa-calendar'
+                : 'fa-clock-o',
             )}
           />
         </span>
@@ -147,6 +150,8 @@ export default class DateTimePicker extends Component {
       'dropdown-menu',
       this.props.widgetClasses,
     );
+
+    if (this.props.disabled) return ('');
 
     return (
       <div className={widgetClass} style={this.props.widgetStyle}>

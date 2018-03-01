@@ -15,6 +15,7 @@ export default class DateTimePickerTime extends Component {
     viewDate: PropTypes.object.isRequired,
     selectedDate: PropTypes.object.isRequired,
     togglePeriod: PropTypes.func.isRequired,
+    showPeriod: PropTypes.bool,
     mode: PropTypes.oneOf([
       Constants.MODE_DATE,
       Constants.MODE_DATETIME,
@@ -46,9 +47,19 @@ export default class DateTimePickerTime extends Component {
     });
   };
 
+  setSelectedMinute = event => {
+    this.goBack();
+    this.props.setSelectedMinute(event);
+  };
+
+  setSelectedHour = event => {
+    this.goBack();
+    this.props.setSelectedHour(event);
+  };
+
   renderMinutes = () => {
     if (this.state.minutesDisplayed) {
-      return <DateTimePickerMinutes {...this.props} onSwitch={this.goBack} />;
+      return <DateTimePickerMinutes {...this.props} setSelectedMinute={this.setSelectedMinute} onSwitch={this.goBack} />;
     } else {
       return null;
     }
@@ -56,7 +67,7 @@ export default class DateTimePickerTime extends Component {
 
   renderHours = () => {
     if (this.state.hoursDisplayed) {
-      return <DateTimePickerHours {...this.props} onSwitch={this.goBack} />;
+      return <DateTimePickerHours {...this.props} setSelectedHour={this.setSelectedHour} onSwitch={this.goBack} />;
     } else {
       return null;
     }
@@ -71,7 +82,7 @@ export default class DateTimePickerTime extends Component {
               <tr>
                 <td>
                   <a className="btn" onClick={this.props.addHour}>
-                    <span className="glyphicon glyphicon-chevron-up" />
+                    <span className="fa fa-chevron-up" />
                   </a>
                 </td>
 
@@ -79,17 +90,17 @@ export default class DateTimePickerTime extends Component {
 
                 <td>
                   <a className="btn" onClick={this.props.addMinute}>
-                    <span className="glyphicon glyphicon-chevron-up" />
+                    <span className="fa fa-chevron-up" />
                   </a>
                 </td>
 
-                <td className="separator" />
+                <td className="separator" hidden={!this.props.showPeriod} />
               </tr>
 
               <tr>
                 <td>
                   <span className="timepicker-hour" onClick={this.showHours}>
-                    {this.props.selectedDate.format('h')}
+                    {this.props.selectedDate.format('HH')}
                   </span>
                 </td>
 
@@ -104,9 +115,9 @@ export default class DateTimePickerTime extends Component {
                   </span>
                 </td>
 
-                <td className="separator" />
+                <td className="separator" hidden={!this.props.showPeriod} />
 
-                <td>
+                <td hidden={!this.props.showPeriod}>
                   <button
                     className="btn btn-primary"
                     onClick={this.props.togglePeriod}
@@ -120,7 +131,7 @@ export default class DateTimePickerTime extends Component {
               <tr>
                 <td>
                   <a className="btn" onClick={this.props.subtractHour}>
-                    <span className="glyphicon glyphicon-chevron-down" />
+                    <span className="fa fa-chevron-down" />
                   </a>
                 </td>
 
@@ -128,11 +139,11 @@ export default class DateTimePickerTime extends Component {
 
                 <td>
                   <a className="btn" onClick={this.props.subtractMinute}>
-                    <span className="glyphicon glyphicon-chevron-down" />
+                    <span className="fa fa-chevron-down" />
                   </a>
                 </td>
 
-                <td className="separator" />
+                <td className="separator" hidden={!this.props.showPeriod}/>
               </tr>
             </tbody>
           </table>

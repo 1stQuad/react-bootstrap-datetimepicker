@@ -128,7 +128,7 @@ export default class DateTimePickerDays extends Component {
           <thead>
             <tr>
               <th className="prev" onClick={this.props.subtractMonth}>
-                <span className="glyphicon glyphicon-chevron-left" />
+                <span className="fa fa-chevron-left" />
               </th>
 
               <th
@@ -141,7 +141,7 @@ export default class DateTimePickerDays extends Component {
               </th>
 
               <th className="next" onClick={this.props.addMonth}>
-                <span className="glyphicon glyphicon-chevron-right" />
+                <span className="fa fa-chevron-right" />
               </th>
             </tr>
 

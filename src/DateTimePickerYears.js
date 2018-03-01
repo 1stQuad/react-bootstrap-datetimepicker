@@ -55,7 +55,7 @@ export default class DateTimePickerYears extends Component {
           <thead>
             <tr>
               <th className="prev" onClick={this.props.subtractDecade}>
-                <span className="glyphicon glyphicon-chevron-left" />
+                <span className="fa fa-chevron-left" />
               </th>
 
               <th className="switch" colSpan="5">
@@ -63,7 +63,7 @@ export default class DateTimePickerYears extends Component {
               </th>
 
               <th className="next" onClick={this.props.addDecade}>
-                <span className="glyphicon glyphicon-chevron-right" />
+                <span className="fa fa-chevron-right" />
               </th>
             </tr>
           </thead>

@@ -18,7 +18,7 @@ export default class DateTimePickerHours extends Component {
             onClick={this.props.onSwitch}
             style={{ width: '100%' }}
           >
-            <span className="glyphicon glyphicon-time" />
+            <span className="fa fa-clock-o" />
           </span>
         </li>
       </ul>

@@ -40,8 +40,8 @@ export default class DateTimeField extends Component {
       inputFormat: this.resolvePropsInputFormat(),
       buttonIcon:
         props.mode === Constants.MODE_TIME
-          ? 'glyphicon-time'
-          : 'glyphicon-calendar',
+          ? 'fa-clock-o'
+          : 'fa-calendar',
       widgetStyle: {
         display: 'block',
         position: 'absolute',
@@ -122,6 +122,9 @@ export default class DateTimeField extends Component {
       Constants.SIZE_MEDIUM,
       Constants.SIZE_LARGE,
     ]),
+    showPeriod: PropTypes.bool,
+    showInputIcon: PropTypes.bool,
+    disabled: PropTypes.bool,
     daysOfWeekDisabled: PropTypes.arrayOf(PropTypes.number),
     isValid: PropTypes.bool,
     name: PropTypes.string,
@@ -182,11 +185,11 @@ export default class DateTimeField extends Component {
 
     return this.setState(
       {
-        inputValue: eventName === 'onChange' ? value : formatValue,
+        inputValue: formatValue,
       },
       function() {
         return this.props[eventName](
-          inputDate.format(this.props.format),
+          inputDate,
           formatValue,
         );
       },
@@ -248,7 +251,7 @@ export default class DateTimeField extends Component {
         function() {
           this.closePicker();
           this.props.onChange(
-            this.state.selectedDate.format(this.props.format),
+            this.state.selectedDate,
           );
           return this.setState({
             inputValue: this.state.selectedDate.format(
@@ -282,7 +285,7 @@ export default class DateTimeField extends Component {
         function() {
           this.closePicker();
           this.props.onChange(
-            this.state.selectedDate.format(this.props.format),
+            this.state.selectedDate,
           );
           return this.setState({
             inputValue: this.state.selectedDate.format(
@@ -305,7 +308,8 @@ export default class DateTimeField extends Component {
       },
       function() {
         this.closePicker();
-        this.props.onChange(this.state.selectedDate.format(this.props.format));
+
+        this.props.onChange(this.state.selectedDate);
         return this.setState({
           inputValue: this.state.selectedDate.format(
             this.state.inputDisplayFormat,
@@ -326,7 +330,7 @@ export default class DateTimeField extends Component {
       },
       function() {
         this.closePicker();
-        this.props.onChange(this.state.selectedDate.format(this.props.format));
+        this.props.onChange(this.state.selectedDate);
         return this.setState({
           inputValue: this.state.selectedDate.format(
             this.state.inputDisplayFormat,
@@ -354,7 +358,7 @@ export default class DateTimeField extends Component {
         selectedDate: this.state.selectedDate.clone().add(1, 'minutes'),
       },
       function() {
-        this.props.onChange(this.state.selectedDate.format(this.props.format));
+        this.props.onChange(this.state.selectedDate);
         return this.setState({
           inputValue: this.state.selectedDate.format(
             this.resolvePropsInputDisplayFormat(),
@@ -370,7 +374,7 @@ export default class DateTimeField extends Component {
         selectedDate: this.state.selectedDate.clone().add(1, 'hours'),
       },
       function() {
-        this.props.onChange(this.state.selectedDate.format(this.props.format));
+        this.props.onChange(this.state.selectedDate);
         return this.setState({
           inputValue: this.state.selectedDate.format(
             this.resolvePropsInputDisplayFormat(),
@@ -404,7 +408,7 @@ export default class DateTimeField extends Component {
         selectedDate: this.state.selectedDate.clone().subtract(1, 'minutes'),
       },
       () => {
-        this.props.onChange(this.state.selectedDate.format(this.props.format));
+        this.props.onChange(this.state.selectedDate);
         return this.setState({
           inputValue: this.state.selectedDate.format(
             this.resolvePropsInputDisplayFormat(),
@@ -420,7 +424,7 @@ export default class DateTimeField extends Component {
         selectedDate: this.state.selectedDate.clone().subtract(1, 'hours'),
       },
       () => {
-        this.props.onChange(this.state.selectedDate.format(this.props.format));
+        this.props.onChange(this.state.selectedDate);
         return this.setState({
           inputValue: this.state.selectedDate.format(
             this.resolvePropsInputDisplayFormat(),
@@ -517,7 +521,7 @@ export default class DateTimeField extends Component {
       classes['days'] = options.daysDisplayed;
       classes['time'] = options.timeDisplayed;
     }
-    gBCR = this.dtpbutton.getBoundingClientRect();
+    gBCR = this.wrapper.getBoundingClientRect();
 
     offset = {
       top: gBCR.top + window.pageYOffset - document.documentElement.clientTop,
@@ -607,9 +611,9 @@ export default class DateTimeField extends Component {
   size = () => {
     switch (this.props.size) {
       case Constants.SIZE_SMALL:
-        return 'form-group-sm';
+        return 'form-control-sm';
       case Constants.SIZE_LARGE:
-        return 'form-group-lg';
+        return 'form-control-lg';
     }
 
     return '';
@@ -632,8 +636,12 @@ export default class DateTimeField extends Component {
   };
 
   render() {
+    console.log(this.props.disabled);
     return (
-      <div className="bootstrap-datetimepicker-wrap">
+      <div className="bootstrap-datetimepicker-wrap"
+           ref={el => {
+               this.wrapper = el;
+           }}>
         {this.renderOverlay()}
         <DateTimePicker
           addDecade={this.addDecade}
@@ -658,6 +666,8 @@ export default class DateTimeField extends Component {
           setToday={this.setToday}
           showDatePicker={this.state.showDatePicker}
           showTimePicker={this.state.showTimePicker}
+          showPeriod={this.props.showPeriod}
+          disabled={this.props.disabled}
           showToday={this.props.showToday}
           subtractDecade={this.subtractDecade}
           subtractHour={this.subtractHour}
@@ -673,7 +683,7 @@ export default class DateTimeField extends Component {
           calculatePosition={this.calculatePosition}
         />
         <div
-          className={classnames('input-group date ' + this.size(), {
+          className={classnames('date ', {
             'has-error': !this.state.isValid,
           })}
           onClick={this.onClick}
@@ -682,7 +692,7 @@ export default class DateTimeField extends Component {
           }}
         >
           <input
-            className="form-control"
+            className={"form-control " + this.size()}
             onChange={this.onChange}
             onBlur={this.onBlur}
             type="text"
@@ -691,6 +701,7 @@ export default class DateTimeField extends Component {
             ref={el => {
               this[this.props.inputRef] = el;
             }}
+            disabled={this.props.disabled}
             onKeyDown={this.onKeyDown}
             name={this.props.name}
             placeholder={this.props.defaultText}
@@ -699,11 +710,12 @@ export default class DateTimeField extends Component {
           <span
             className="input-group-addon"
             onBlur={this.onBlur}
+            hidden={!this.props.showInputIcon}
             ref={el => {
               this.dtpbutton = el;
             }}
           >
-            <span className={classnames('glyphicon', this.state.buttonIcon)} />
+            <span className={classnames('fa', this.state.buttonIcon)} />
           </span>
         </div>
       </div>
