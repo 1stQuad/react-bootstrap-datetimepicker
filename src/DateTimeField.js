@@ -164,7 +164,7 @@ export default class DateTimeField extends Component {
 
   formatValueForEvent(eventName, event) {
     const value = event.target == null ? event : event.target.value;
-    const inputDate = moment(value, this.state.inputFormat, true);
+    const inputDate = moment(value, this.state.inputFormat, true).isValid() ? moment(value, this.state.inputFormat, true) : moment(this.state.inputValue, this.state.inputFormat, true);
     const yearDigits = this.yearDigits(value);
     const yearIsDone =
       yearDigits === 4 ||
@@ -505,14 +505,7 @@ export default class DateTimeField extends Component {
 
   calculatePosition = options => {
     let classes,
-      gBCR,
-      offset,
-      placePosition,
-      scrollTop,
-      styles,
-      widgetOffsetHeight,
-      clientHeight,
-      height;
+      styles;
 
     classes = {};
     if (options) {
@@ -521,58 +514,16 @@ export default class DateTimeField extends Component {
       classes['days'] = options.daysDisplayed;
       classes['time'] = options.timeDisplayed;
     }
-    gBCR = this.wrapper.getBoundingClientRect();
-
-    offset = {
-      top: gBCR.top + window.pageYOffset - document.documentElement.clientTop,
-      left: 0,
-    };
-    offset.top = offset.top + this.datetimepicker.offsetHeight;
-    //Support for both old version of react and new version (v1.4.2) of react
-    //The new version of react return the child refs as a component rather than a DomNode
-    widgetOffsetHeight =
-      this.widget.offsetHeight ||
-      ReactDOM.findDOMNode(this.widget).offsetHeight; // eslint-disable-line react/no-find-dom-node
-    clientHeight =
-      this.widget.clientHeight ||
-      ReactDOM.findDOMNode(this.widget).clientHeight; // eslint-disable-line react/no-find-dom-node
-    height = this.widget.height || ReactDOM.findDOMNode(this.widget).height; // eslint-disable-line react/no-find-dom-node
-
-    scrollTop =
-      window.pageYOffset !== undefined
-        ? window.pageYOffset
-        : (
-            document.documentElement ||
-            document.body.parentNode ||
-            document.body
-          ).scrollTop;
-    placePosition =
-      this.props.direction === 'up'
-        ? 'top'
-        : this.props.direction === 'bottom'
-          ? 'bottom'
-          : this.props.direction === 'auto'
-            ? offset.top + widgetOffsetHeight >
-                window.offsetHeight + scrollTop &&
-              widgetOffsetHeight + this.datetimepicker.offsetHeight > offset.top
-              ? 'top'
-              : 'bottom'
-            : void 0;
-    if (placePosition === 'top') {
-      offset.top = -widgetOffsetHeight - 2;
+    if (this.props.direction === 'up' || this.props.direction === 'auto') {
       classes.top = true;
       classes.bottom = false;
     } else {
-      offset.top = 35;
       classes.top = false;
       classes.bottom = true;
     }
     styles = {
       display: 'block',
       position: 'absolute',
-      top: offset.top,
-      left: offset.left,
-      right: 40,
     };
     return this.setState({
       widgetStyle: styles,

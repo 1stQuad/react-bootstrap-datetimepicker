@@ -12,6 +12,10 @@
   border-radius: 4px;
 }
 
+.bootstrap-datetimepicker-widget.dropdown-menu{
+  margin-top: 6px;
+}
+
 .bootstrap-datetimepicker-widget.timepicker-sbs {
   width: 600px;
 }
@@ -215,15 +219,26 @@
   padding: 6px;
   width: 170px;
 }
+.bootstrap-datetimepicker-widget.days,
+.bootstrap-datetimepicker-widget.months,
+.bootstrap-datetimepicker-widget.years{
+  padding: 6px;
+}
 .bootstrap-datetimepicker-widget.time td:not(.separator), .bootstrap-datetimepicker-widget.time th:not(.separator){
   width: 35px;
   height: 35px;
   line-height: 35px;
   text-align: center;
 }
+.bootstrap-datetimepicker-widget th.next,
+.bootstrap-datetimepicker-widget th.prev{
+  width: 33px;
+}
+
 .bootstrap-datetimepicker-widget.time .btn{
   padding: 0;
 }
+
 .bootstrap-datetimepicker-widget.time td span{
   width: 50px;
   height: 35px;
@@ -231,4 +246,14 @@
   text-align: center;
   float: none;
   display: inline-block;
+}
+
+.bootstrap-datetimepicker-widget td span.month,
+.bootstrap-datetimepicker-widget td span.year {
+  width: 23%;
+  margin: 1%;
+}
+
+.bootstrap-datetimepicker-widget .btn-today{
+  padding: 3px 0;
 }
