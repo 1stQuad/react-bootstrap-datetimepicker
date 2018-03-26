@@ -7,6 +7,7 @@ import Constants from './Constants.js';
 
 export default class DateTimePicker extends Component {
   static propTypes = {
+    showPicker: PropTypes.bool,
     showDatePicker: PropTypes.bool,
     showTimePicker: PropTypes.bool,
     showPeriod: PropTypes.bool,
@@ -72,6 +73,7 @@ export default class DateTimePicker extends Component {
             viewMode={this.props.viewMode}
             mode={this.props.mode}
             calculatePosition={this.props.calculatePosition}
+            showPicker={this.props.showPicker}
           />
         </li>
       );
@@ -107,6 +109,7 @@ export default class DateTimePicker extends Component {
             subtractMinute={this.props.subtractMinute}
             togglePeriod={this.props.togglePeriod}
             viewDate={this.props.viewDate}
+            showPicker={this.props.showPicker}
           />
         </li>
       );

@@ -12,6 +12,7 @@ export default class DateTimePickerDate extends Component {
     viewDate: PropTypes.object.isRequired,
     selectedDate: PropTypes.object.isRequired,
     showToday: PropTypes.bool,
+    showPicker: PropTypes.bool,
     viewMode: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     mode: PropTypes.oneOf([
       Constants.MODE_DATE,
@@ -60,7 +61,17 @@ export default class DateTimePickerDate extends Component {
     }
   }
 
-  showMonths = () => {
+    componentWillReceiveProps(newProps) {
+        if (!this.props.showPicker && newProps.showPicker && !this.state.daysDisplayed) {
+            this.setState({
+                daysDisplayed: true,
+                monthsDisplayed: false,
+                yearsDisplayed: false
+            });
+        }
+    }
+
+    showMonths = () => {
     return this.setState({
       daysDisplayed: false,
       monthsDisplayed: true,

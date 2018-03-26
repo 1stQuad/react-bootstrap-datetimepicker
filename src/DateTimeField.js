@@ -353,6 +353,7 @@ export default class DateTimeField extends Component {
   };
 
   addMinute = () => {
+    this.setIsValid(true);
     return this.setState(
       {
         selectedDate: this.state.selectedDate.clone().add(1, 'minutes'),
@@ -369,7 +370,8 @@ export default class DateTimeField extends Component {
   };
 
   addHour = () => {
-    return this.setState(
+      this.setIsValid(true);
+      return this.setState(
       {
         selectedDate: this.state.selectedDate.clone().add(1, 'hours'),
       },
@@ -631,6 +633,7 @@ export default class DateTimeField extends Component {
           widgetClasses={this.state.widgetClasses}
           widgetStyle={this.state.widgetStyle}
           calculatePosition={this.calculatePosition}
+          showPicker={this.state.showPicker}
         />
         <div
           className={classnames('date ', {

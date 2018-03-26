@@ -16,6 +16,7 @@ export default class DateTimePickerTime extends Component {
     selectedDate: PropTypes.object.isRequired,
     togglePeriod: PropTypes.func.isRequired,
     showPeriod: PropTypes.bool,
+    showPicker: PropTypes.bool,
     mode: PropTypes.oneOf([
       Constants.MODE_DATE,
       Constants.MODE_DATETIME,
@@ -154,7 +155,13 @@ export default class DateTimePickerTime extends Component {
     }
   };
 
-  render() {
+    componentWillReceiveProps(newProps){
+        if (!this.props.showPicker && newProps.showPicker && (this.state.minutesDisplayed || this.state.hoursDisplayed)) {
+            this.goBack();
+        }
+    }
+
+    render() {
     return (
       <div className="timepicker">
         {this.renderPicker()}
