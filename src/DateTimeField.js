@@ -642,7 +642,7 @@ export default class DateTimeField extends Component {
           }}
         >
           <input
-            className={"form-control " + this.size()}
+            className={"form-control " + this.size() + (this.state.isValid ? "" : " is-invalid")}
             onChange={this.onChange}
             onBlur={this.onBlur}
             type="text"
