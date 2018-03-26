@@ -140,7 +140,7 @@ export default class DateTimeField extends Component {
       state.viewDate = moment(now, nextProps.format, true).startOf('month');
       state.selectedDate = moment(now, nextProps.format, true);
       state.inputValue = '';
-    } else if (moment.isMoment(nextProps.dateTime)) {
+    } else if (moment.isMoment(nextProps.dateTime) && nextProps.dateTime.isValid()) {
       state.viewDate = moment(nextProps.dateTime).startOf('month');
       state.selectedDate = moment(nextProps.dateTime);
       state.inputValue = moment(nextProps.dateTime).format(
@@ -164,7 +164,7 @@ export default class DateTimeField extends Component {
 
   formatValueForEvent(eventName, event) {
     const value = event.target == null ? event : event.target.value;
-    const inputDate = moment(value, this.state.inputFormat, true).isValid() ? moment(value, this.state.inputFormat, true) : moment(this.state.inputValue, this.state.inputFormat, true);
+    const inputDate = moment(value, this.state.inputFormat, true);
     const yearDigits = this.yearDigits(value);
     const yearIsDone =
       yearDigits === 4 ||

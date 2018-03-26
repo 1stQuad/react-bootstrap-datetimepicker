@@ -17,6 +17,7 @@
     "build": "cross-env NODE_ENV=production webpack --output-filename react-bootstrap-datetimepicker.js",
     "build-min": "cross-env NODE_ENV=production COMPRESS=1 webpack --output-filename react-bootstrap-datetimepicker.min.js",
     "test": "jest",
+    "examples": "webpack-dev-server --config ./examples/webpack.config.js",
     "lint": "eslint src --fix"
   },
   "publishConfig": {
