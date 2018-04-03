@@ -143,10 +143,10 @@ export default class DateTimeField extends Component {
     } else if (moment.isMoment(nextProps.dateTime) && nextProps.dateTime.isValid()) {
       state.viewDate = moment(nextProps.dateTime).startOf('month');
       state.selectedDate = moment(nextProps.dateTime);
-      state.isValid = true;
       state.inputValue = moment(nextProps.dateTime).format(
         state.inputDisplayFormat,
       );
+      state.isValid = this.checkIsValid(state.inputValue);
     } else if (moment(nextProps.dateTime, nextProps.format, true).isValid()) {
       state.viewDate = moment(
         nextProps.dateTime,
@@ -154,12 +154,12 @@ export default class DateTimeField extends Component {
         true,
       ).startOf('month');
       state.selectedDate = moment(nextProps.dateTime, nextProps.format, true);
-      state.isValid = true;
       state.inputValue = moment(
         nextProps.dateTime,
         nextProps.format,
         true,
       ).format(state.inputDisplayFormat);
+      state.isValid = this.checkIsValid(state.inputValue);
     }
     return this.setState(state);
   };
@@ -233,11 +233,6 @@ export default class DateTimeField extends Component {
       } else {
           return false;
       }
-    return (
-      moment(value, this.state.inputFormat, true).isValid() ||
-      value === this.props.defaultText ||
-      value === ''
-    );
   };
 
   setIsValid = isValid => {

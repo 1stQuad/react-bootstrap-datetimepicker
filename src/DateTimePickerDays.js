@@ -96,7 +96,7 @@ export default class DateTimePickerDays extends Component {
         <td
           className={classnames(classes)}
           key={prevMonth.month() + '-' + prevMonth.date()}
-          onClick={!classes.softDisabled && this.props.setSelectedDate}
+          onClick={!classes.softDisabled ? this.props.setSelectedDate : undefined}
         >
           {prevMonth.date()}
         </td>,
