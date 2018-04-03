@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import DateTimeField from "react-bootstrap-datetimepicker";
+import moment from 'moment';
 
 class ParentComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: "1990-06-05",
+      date: moment(),
       format: "YYYY-MM-DD",
-      inputFormat: "DD/MM/YYYY",
+      inputFormat: "YYYY-MM-DD",
       mode: "date"
     };
   }
@@ -18,15 +19,17 @@ class ParentComponent extends Component {
   }
 
   render() {
-    const {date, format, mode, inputFormat} = this.state;
+      const minimalDate = moment('01.01.2017', 'DD.MM.YYYY');
+      const {date, format, mode, inputFormat} = this.state;
+      console.log(minimalDate);
     return (<DateTimeField
       dateTime={date}
       format={format}
+      minDate={minimalDate}
       inputFormat={inputFormat}
       onChange={this.handleChange}
       viewMode={mode}
     />);
   }
 }
-
 module.exports = ParentComponent;

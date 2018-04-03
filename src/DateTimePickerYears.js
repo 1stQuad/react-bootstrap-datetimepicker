@@ -36,7 +36,7 @@ export default class DateTimePickerYears extends Component {
         <span
           className={classnames(classes)}
           key={year}
-          onClick={this.props.setViewYear}
+          onClick={!classes.softDisabled && this.props.setViewYear}
         >
           {year}
         </span>,

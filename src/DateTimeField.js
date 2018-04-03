@@ -225,6 +225,14 @@ export default class DateTimeField extends Component {
   };
 
   checkIsValid = value => {
+      const date = moment(value, this.state.inputFormat, true);
+      if (date.isValid()) {
+        const min = this.props.minDate ? date.isAfter( this.props.minDate.clone().subtract(1, 'days') ) : true;
+        const max = this.props.maxDate ? date.isBefore(this.props.maxDate.clone().add(1, 'days')) : true;
+          return (min && max);
+      } else {
+          return false;
+      }
     return (
       moment(value, this.state.inputFormat, true).isValid() ||
       value === this.props.defaultText ||

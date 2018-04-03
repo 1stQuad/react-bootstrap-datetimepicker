@@ -49,7 +49,7 @@ export default class DateTimePickerMonths extends Component {
           (maxDate && currentMonth.isAfter(maxDate)),
       };
       months.push(
-        <span className={classnames(classes)} key={i} onClick={onClick}>
+        <span className={classnames(classes)} key={i} onClick={!classes.softDisabled && onClick}>
           {monthsShort[i]}
         </span>,
       );

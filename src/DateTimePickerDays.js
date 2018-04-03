@@ -83,7 +83,9 @@ export default class DateTimePickerDays extends Component {
       }
       if (
         (minDate && prevMonth.isBefore(minDate)) ||
-        (maxDate && prevMonth.isAfter(maxDate))
+        (minDate && prevMonth.isSame(minDate)) ||
+        (maxDate && prevMonth.isAfter(maxDate)) ||
+        (maxDate && prevMonth.isSame(maxDate))
       ) {
         classes.softDisabled = true;
       }
@@ -94,7 +96,7 @@ export default class DateTimePickerDays extends Component {
         <td
           className={classnames(classes)}
           key={prevMonth.month() + '-' + prevMonth.date()}
-          onClick={this.props.setSelectedDate}
+          onClick={!classes.softDisabled && this.props.setSelectedDate}
         >
           {prevMonth.date()}
         </td>,
