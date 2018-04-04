@@ -16,9 +16,7 @@ export default class DateTimeField extends Component {
     inputRef: 'inputDateTime',
     size: Constants.SIZE_MEDIUM,
     mode: Constants.MODE_DATETIME,
-    onChange: x => {
-      console.log(x);
-    },
+    onChange: () => {},
     onBlur: () => {},
     onEnterKeyDown: () => {},
   };
