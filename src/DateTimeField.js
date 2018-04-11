@@ -583,7 +583,7 @@ export default class DateTimeField extends Component {
       bottom: 0,
       left: 0,
       right: 0,
-      zIndex: '999',
+      zIndex: '80',
     };
     if (this.state.showPicker) {
       return <div onClick={this.closePicker} style={styles} />;
@@ -594,7 +594,7 @@ export default class DateTimeField extends Component {
 
   render() {
     return (
-      <div className="bootstrap-datetimepicker-wrap"
+        <div className={this.state.showPicker ? "bootstrap-datetimepicker-wrap datetimepicker-show" : "bootstrap-datetimepicker-wrap"}
            ref={el => {
                this.wrapper = el;
            }}>

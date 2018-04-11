@@ -16,6 +16,11 @@
   margin-top: 6px;
 }
 
+.bootstrap-datetimepicker-widget.dropdown-menu + div{
+  position: relative;
+  z-index: 80;
+}
+
 .bootstrap-datetimepicker-widget.timepicker-sbs {
   width: 600px;
 }
