@@ -21,7 +21,7 @@
     "lint": "eslint src --fix"
   },
   "publishConfig": {
-    "registry": "http://npm.addevcloudservices.com.au"
+    "registry": "https://registry.npmjs.org"
   },
   "keywords": [
     "react",
