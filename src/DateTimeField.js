@@ -593,8 +593,15 @@ export default class DateTimeField extends Component {
   };
 
   render() {
+    let pickerClass = 'bootstrap-datetimepicker-wrap';
+    if (this.state.showPicker) {
+      pickerClass += " datetimepicker-show";
+    }
+    if (!this.state.isValid) {
+      pickerClass += " is-invalid";
+    }
     return (
-        <div className={this.state.showPicker ? "bootstrap-datetimepicker-wrap datetimepicker-show" : "bootstrap-datetimepicker-wrap"}
+        <div className={pickerClass}
            ref={el => {
                this.wrapper = el;
            }}>

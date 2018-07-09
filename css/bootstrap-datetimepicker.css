@@ -225,6 +225,14 @@
   position: relative;
 }
 
+.bootstrap-datetimepicker-wrap.is-invalid ~ .invalid-feedback{
+  display: block;
+}
+
+.time-picker.is-invalid ~ .invalid-feedback{
+  display: block;
+}
+
 .bootstrap-datetimepicker-widget.time{
   min-width: 0;
   padding: 6px;
