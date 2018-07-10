@@ -12,6 +12,7 @@ export default class DateTimeField extends Component {
     format: 'x',
     showToday: true,
     viewMode: 'days',
+    validationClass: '',
     daysOfWeekDisabled: [],
     inputRef: 'inputDateTime',
     size: Constants.SIZE_MEDIUM,
@@ -127,6 +128,7 @@ export default class DateTimeField extends Component {
     isValid: PropTypes.bool,
     name: PropTypes.string,
     tabIndex: PropTypes.string,
+    validationClass: PropTypes.string,
   };
 
   componentWillReceiveProps = nextProps => {
@@ -597,8 +599,8 @@ export default class DateTimeField extends Component {
     if (this.state.showPicker) {
       pickerClass += " datetimepicker-show";
     }
-    if (!this.state.isValid) {
-      pickerClass += " is-invalid";
+    if (this.props.validationClass) {
+      pickerClass += " " + this.props.validationClass;
     }
     return (
         <div className={pickerClass}
@@ -656,7 +658,7 @@ export default class DateTimeField extends Component {
           }}
         >
           <input
-            className={"form-control " + this.size() + (this.state.isValid ? "" : " is-invalid")}
+            className={"form-control " + this.size()}
             onChange={this.onChange}
             onBlur={this.onBlur}
             type="text"
