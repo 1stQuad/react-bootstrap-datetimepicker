@@ -289,10 +289,7 @@ export default class DateTimeField extends Component {
         },
         function() {
           this.closePicker();
-          this.props.onChange(
-            this.state.selectedDate,
-            'click'
-          );
+          this.props.onChange(this.state.selectedDate, 'click');
           return this.setState({
             inputValue: this.state.selectedDate.format(
               this.state.inputDisplayFormat,
@@ -314,8 +311,7 @@ export default class DateTimeField extends Component {
       },
       function() {
         this.closePicker();
-
-        this.props.onChange(this.state.selectedDate);
+        this.props.onChange(this.state.selectedDate, 'click');
         return this.setState({
           inputValue: this.state.selectedDate.format(
             this.state.inputDisplayFormat,
@@ -336,7 +332,7 @@ export default class DateTimeField extends Component {
       },
       function() {
         this.closePicker();
-        this.props.onChange(this.state.selectedDate);
+        this.props.onChange(this.state.selectedDate, 'click');
         return this.setState({
           inputValue: this.state.selectedDate.format(
             this.state.inputDisplayFormat,
