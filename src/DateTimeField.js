@@ -361,7 +361,7 @@ export default class DateTimeField extends Component {
         selectedDate: this.state.selectedDate.clone().add(1, 'minutes'),
       },
       function() {
-        this.props.onChange(this.state.selectedDate);
+        this.props.onChange(this.state.selectedDate, 'click');
         return this.setState({
           inputValue: this.state.selectedDate.format(
             this.resolvePropsInputDisplayFormat(),
@@ -378,7 +378,7 @@ export default class DateTimeField extends Component {
         selectedDate: this.state.selectedDate.clone().add(1, 'hours'),
       },
       function() {
-        this.props.onChange(this.state.selectedDate);
+        this.props.onChange(this.state.selectedDate, 'click');
         return this.setState({
           inputValue: this.state.selectedDate.format(
             this.resolvePropsInputDisplayFormat(),
@@ -412,7 +412,7 @@ export default class DateTimeField extends Component {
         selectedDate: this.state.selectedDate.clone().subtract(1, 'minutes'),
       },
       () => {
-        this.props.onChange(this.state.selectedDate);
+        this.props.onChange(this.state.selectedDate, 'click');
         return this.setState({
           inputValue: this.state.selectedDate.format(
             this.resolvePropsInputDisplayFormat(),
@@ -428,7 +428,7 @@ export default class DateTimeField extends Component {
         selectedDate: this.state.selectedDate.clone().subtract(1, 'hours'),
       },
       () => {
-        this.props.onChange(this.state.selectedDate);
+        this.props.onChange(this.state.selectedDate, 'click');
         return this.setState({
           inputValue: this.state.selectedDate.format(
             this.resolvePropsInputDisplayFormat(),
