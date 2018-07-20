@@ -13,4 +13,4 @@ To update version:
  2) if need: npm login
  3) npm version <update_version>
  4) npm publish
- 5) update dependency in your project
+ 5) update dependency: npm update @1stquad/react-bootstrap-datetimepicker
