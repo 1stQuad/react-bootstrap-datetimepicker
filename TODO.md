@@ -7,3 +7,10 @@
 - use bootstrap accordions for picker switching
 - support locales
 - build DateTimePickerHours and Minutes in the same manner than Years
+
+To update version:
+ 1) npm whoami  
+ 2) if need: npm login
+ 3) npm version <update_version>
+ 4) npm publish
+ 5) update dependency in your project
