@@ -9,6 +9,7 @@
 - build DateTimePickerHours and Minutes in the same manner than Years
 
 To update version:
+ 0) npm run build-npm  
  1) npm whoami  
  2) if need: npm login
  3) npm version <update_version>
