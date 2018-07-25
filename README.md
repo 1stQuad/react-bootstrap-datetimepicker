@@ -6,7 +6,7 @@ This project is a port of https://github.com/Eonasdan/bootstrap-datetimepicker f
 Usage
 ===============================
 
-Installation : `npm install --save @myob/react-bootstrap-datetimepicker`
+Installation : `npm install --save @1stquad/react-bootstrap-datetimepicker`
 
 Then
 
@@ -43,12 +43,12 @@ DateTimeField
 | **showToday** | boolean | true | Highlights today's date |
 | **size** | string | "md" | Changes the size of the date picker input field. Sizes: "sm", "md", "lg" |
 | **daysOfWeekDisabled** | array of integer | [] | Disables clicking on some days. Goes from 0 (Sunday) to 6 (Saturday). |
-| **viewMode** | string or number | 'days' | The default view to display when the picker is shown. ('years', 'months', 'days') |
+| **viewMode** | string or number | 'days' | The default view to display when the picker is shown. ('time', 'years', 'months', 'days') |
 | **inputProps** | object | undefined | Defines additional attributes for the input element of the component. |
 | **inputRef** | string or function | inputDateTime | Allows a custom reference to be passed to the input field. |
 | **minDate** | moment | undefined | The earliest date allowed for entry in the calendar view. |
 | **maxDate** | moment | undefined | The latest date allowed for entry in the calendar view. |
-| **mode** | string | undefined | Allows to selectively display only the time picker ('time'), date picker ('date'), or month picker ('month') |
+| **mode** | string | undefined | Allows to selectively display only the time picker ('time'), date picker ('date'), date-timepicker ('datetime') or month picker ('month') |
 | **defaultText** | string | undefined | Sets the input's placeholder value. Could be an empty string, or helper text. |
 | **name** | string | undefined | Sets the name of the input element. |
 | **tabIndex** | string | undefined | Sets the tabIndex of the input element. |
@@ -86,8 +86,8 @@ Local linking to another project
 ========
 1. Run `npm run build-npm` from the react-bootstrap-datetimepicker console.
 2. In your other project's **package.json**,
-Use `"@myob/react-bootstrap-datetimepicker": "#{local_path}/react-bootstrap-datetimepicker"` instead of `"@myob/react-bootstrap-datetimepicker": "0.0.25"` in the dependency list.
-3. Run `npm install @myob/react-bootstrap-datetimepicker` from the same folder level as the package.json.
+Use `"@1stquad/react-bootstrap-datetimepicker: "#{local_path}/react-bootstrap-datetimepicker"` instead of `"@1stquad/react-bootstrap-datetimepicker": "1.0.5"` in the dependency list.
+3. Run `npm install @1stquad/react-bootstrap-datetimepicker` from the same folder level as the package.json.
 
 Update Warning
 ===============================
