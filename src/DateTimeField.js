@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import moment from 'moment';
 import classnames from 'classnames';
 import DateTimePicker from './DateTimePicker.js';
@@ -33,12 +32,12 @@ export default class DateTimeField extends Component {
     }
 
     this.state = {
-      showDatePicker: props.mode !== Constants.MODE_TIME,
-      showTimePicker: props.mode === Constants.MODE_TIME,
+      showDatePicker: props.mode !== Constants.MODE_TIME && props.viewMode !== Constants.MODE_TIME,
+      showTimePicker: props.mode === Constants.MODE_TIME || props.viewMode === Constants.MODE_TIME,
       inputDisplayFormat: this.resolvePropsInputDisplayFormat(),
       inputFormat: this.resolvePropsInputFormat(),
       buttonIcon:
-        props.mode === Constants.MODE_TIME
+        props.mode === Constants.MODE_TIME || props.viewMode === Constants.MODE_TIME
           ? 'fa-clock-o'
           : 'fa-calendar',
       widgetStyle: {
