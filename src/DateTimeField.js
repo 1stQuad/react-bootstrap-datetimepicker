@@ -7,7 +7,7 @@ import Constants from './Constants.js';
 
 export default class DateTimeField extends Component {
     static defaultProps = {
-        dateTime: moment().format('x'),
+        dateTime: Date,
         format: 'x',
         showToday: true,
         viewMode: 'days',
@@ -27,11 +27,10 @@ export default class DateTimeField extends Component {
     constructor(props) {
         super(props);
 
-        var dateTime = moment().format(props.format);
-        if (props.dateTime && moment.isMoment(props.dateTime)) {
-            dateTime = props.dateTime;
-        } else if (moment(props.dateTime, props.format, true).isValid()) {
-            dateTime = moment(props.dateTime, props.format, true);
+        let dateTime = moment.utc().format(props.format);;
+
+        if (props.dateTime) {
+            dateTime = moment.utc(props.dateTime);
         }
 
         this.state = {
@@ -49,10 +48,10 @@ export default class DateTimeField extends Component {
                 left: -9999,
                 zIndex: '9999 !important',
             },
-            viewDate: moment(dateTime, this.props.format).startOf('month'),
-            selectedDate: moment(dateTime, this.props.format),
+            viewDate: moment.utc(dateTime, this.props.format).startOf('month'),
+            selectedDate: moment.utc(dateTime, this.props.format),
             inputValue: props.dateTime
-                ? moment(dateTime, this.props.format).format(this.resolvePropsInputDisplayFormat())
+                ? moment.utc(dateTime, this.props.format).format(this.resolvePropsInputDisplayFormat())
                 : '',
             isValid: true,
         };
@@ -138,25 +137,25 @@ export default class DateTimeField extends Component {
         state.inputDisplayFormat = this.resolvePropsInputDisplayFormat(nextProps);
 
         if (!nextProps.dateTime) {
-            let now = moment().format(nextProps.format);
-            state.viewDate = moment(now, nextProps.format, true).startOf('month');
-            state.selectedDate = moment(now, nextProps.format, true);
+            let now = moment.utc().format(nextProps.format);
+            state.viewDate = moment.utc(now, nextProps.format, true).startOf('month');
+            state.selectedDate = moment.utc(now, nextProps.format, true);
             state.inputValue = '';
         } else if (moment.isMoment(nextProps.dateTime) && nextProps.dateTime.isValid()) {
-            state.viewDate = moment(nextProps.dateTime).startOf('month');
-            state.selectedDate = moment(nextProps.dateTime);
-            state.inputValue = moment(nextProps.dateTime).format(
+            state.viewDate = moment.utc(nextProps.dateTime).startOf('month');
+            state.selectedDate = moment.utc(nextProps.dateTime);
+            state.inputValue = moment.utc(nextProps.dateTime).format(
                 state.inputDisplayFormat,
             );
             state.isValid = this.checkIsValid(state.inputValue);
-        } else if (moment(nextProps.dateTime, nextProps.format, true).isValid()) {
-            state.viewDate = moment(
+        } else if (moment.utc(nextProps.dateTime, nextProps.format, true).isValid()) {
+            state.viewDate = moment.utc(
                 nextProps.dateTime,
                 nextProps.format,
                 true,
             ).startOf('month');
-            state.selectedDate = moment(nextProps.dateTime, nextProps.format, true);
-            state.inputValue = moment(
+            state.selectedDate = moment.utc(nextProps.dateTime, nextProps.format, true);
+            state.inputValue = moment.utc(
                 nextProps.dateTime,
                 nextProps.format,
                 true,
@@ -168,7 +167,7 @@ export default class DateTimeField extends Component {
 
     formatValueForEvent(eventName, event) {
         const value = event.target == null ? event : event.target.value;
-        const inputDate = moment(value, this.state.inputFormat, true);
+        const inputDate = moment.utc(value, this.state.inputFormat, true);
         const yearDigits = this.yearDigits(value);
         const yearIsDone =
             yearDigits === 4 ||
@@ -193,7 +192,7 @@ export default class DateTimeField extends Component {
             },
             function () {
                 return this.props[eventName](
-                    inputDate,
+                    inputDate.toDate(),
                     formatValue,
                 );
             },
@@ -227,7 +226,7 @@ export default class DateTimeField extends Component {
     };
 
     checkIsValid = value => {
-        const date = moment(value, this.state.inputFormat, true);
+        const date = moment.utc(value, this.state.inputFormat, true);
         if (date.isValid()) {
             const min = this.props.minDate ? date.isAfter(this.props.minDate.clone().subtract(1, 'days')) : true;
             const max = this.props.maxDate ? date.isBefore(this.props.maxDate.clone().add(1, 'days')) : true;
@@ -249,7 +248,7 @@ export default class DateTimeField extends Component {
             this.setIsValid(true);
             return this.setState(
                 {
-                    selectedDate: moment(this.state.viewDate.clone().toDate())
+                    selectedDate: moment.utc(this.state.viewDate.clone().toDate())
                         .month(e.target.innerHTML)
                         .date(1)
                         .hour(this.state.selectedDate.hours())
@@ -258,7 +257,7 @@ export default class DateTimeField extends Component {
                 function () {
                     this.closePicker();
                     this.props.onChange(
-                        this.state.selectedDate,
+                        this.state.selectedDate.toDate(),
                     );
                     return this.setState({
                         inputValue: this.state.selectedDate.format(
@@ -283,7 +282,7 @@ export default class DateTimeField extends Component {
             else month = this.state.viewDate.month();
             return this.setState(
                 {
-                    selectedDate: moment(this.state.viewDate)
+                    selectedDate: moment.utc(this.state.viewDate)
                         .month(month)
                         .date(parseInt(e.target.innerHTML))
                         .hour(this.state.selectedDate.hours())
@@ -291,7 +290,7 @@ export default class DateTimeField extends Component {
                 },
                 function () {
                     this.closePicker();
-                    this.props.onChange(this.state.selectedDate, 'click');
+                    this.props.onChange(this.state.selectedDate.toDate(), 'click');
                     return this.setState({
                         inputValue: this.state.selectedDate.format(
                             this.state.inputDisplayFormat,
@@ -313,7 +312,7 @@ export default class DateTimeField extends Component {
             },
             function () {
                 this.closePicker();
-                this.props.onChange(this.state.selectedDate, 'click');
+                this.props.onChange(this.state.selectedDate.toDate(), 'click');
                 return this.setState({
                     inputValue: this.state.selectedDate.format(
                         this.state.inputDisplayFormat,
@@ -334,7 +333,7 @@ export default class DateTimeField extends Component {
             },
             function () {
                 this.closePicker();
-                this.props.onChange(this.state.selectedDate, 'click');
+                this.props.onChange(this.state.selectedDate.toDate(), 'click');
                 return this.setState({
                     inputValue: this.state.selectedDate.format(
                         this.state.inputDisplayFormat,
@@ -363,7 +362,7 @@ export default class DateTimeField extends Component {
                 selectedDate: this.state.selectedDate.clone().add(1, 'minutes'),
             },
             function () {
-                this.props.onChange(this.state.selectedDate, 'click');
+                this.props.onChange(this.state.selectedDate.toDate(), 'click');
                 return this.setState({
                     inputValue: this.state.selectedDate.format(
                         this.resolvePropsInputDisplayFormat(),
@@ -380,7 +379,7 @@ export default class DateTimeField extends Component {
                 selectedDate: this.state.selectedDate.clone().add(1, 'hours'),
             },
             function () {
-                this.props.onChange(this.state.selectedDate, 'click');
+                this.props.onChange(this.state.selectedDate.toDate(), 'click');
                 return this.setState({
                     inputValue: this.state.selectedDate.format(
                         this.resolvePropsInputDisplayFormat(),
@@ -414,7 +413,7 @@ export default class DateTimeField extends Component {
                 selectedDate: this.state.selectedDate.clone().subtract(1, 'minutes'),
             },
             () => {
-                this.props.onChange(this.state.selectedDate, 'click');
+                this.props.onChange(this.state.selectedDate.toDate(), 'click');
                 return this.setState({
                     inputValue: this.state.selectedDate.format(
                         this.resolvePropsInputDisplayFormat(),
@@ -430,7 +429,7 @@ export default class DateTimeField extends Component {
                 selectedDate: this.state.selectedDate.clone().subtract(1, 'hours'),
             },
             () => {
-                this.props.onChange(this.state.selectedDate, 'click');
+                this.props.onChange(this.state.selectedDate.toDate(), 'click');
                 return this.setState({
                     inputValue: this.state.selectedDate.format(
                         this.resolvePropsInputDisplayFormat(),
@@ -484,7 +483,7 @@ export default class DateTimeField extends Component {
     };
 
     setToday = () => {
-        let today = moment();
+        let today = moment.utc();
         if (
             this.props.dateTime &&
             moment.isMoment(this.props.dateTime) &&
@@ -499,7 +498,7 @@ export default class DateTimeField extends Component {
             },
             function () {
                 this.closePicker();
-                this.props.onChange(today, 'click');
+                this.props.onChange(today.toDate(), 'click');
                 return this.setState({
                     inputValue: this.state.selectedDate.format(
                         this.resolvePropsInputDisplayFormat(),
