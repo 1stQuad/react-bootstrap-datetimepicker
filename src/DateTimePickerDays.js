@@ -39,7 +39,7 @@ export default class DateTimePickerDays extends Component {
     prevMonth = this.props.viewDate.clone().subtract(1, 'months');
     days = prevMonth.daysInMonth();
     prevMonth.date(days).startOf('week');
-    nextMonth = moment(prevMonth)
+    nextMonth = moment.utc(prevMonth)
       .clone()
       .add(42, 'd');
     minDate = this.props.minDate
@@ -67,7 +67,7 @@ export default class DateTimePickerDays extends Component {
       }
       if (
         prevMonth.isSame(
-          moment({
+          moment.utc({
             y: this.props.selectedDate.year(),
             M: this.props.selectedDate.month(),
             d: this.props.selectedDate.date(),
@@ -77,7 +77,7 @@ export default class DateTimePickerDays extends Component {
         classes.active = true;
       }
       if (this.props.showToday) {
-        if (prevMonth.isSame(moment(), 'day')) {
+        if (prevMonth.isSame(moment.utc(), 'day')) {
           classes.today = true;
         }
       }
@@ -103,7 +103,7 @@ export default class DateTimePickerDays extends Component {
       );
       if (
         prevMonth.weekday() ===
-        moment()
+        moment.utc()
           .endOf('week')
           .weekday()
       ) {
