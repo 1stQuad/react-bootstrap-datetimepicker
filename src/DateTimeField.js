@@ -27,7 +27,7 @@ export default class DateTimeField extends Component {
     constructor(props) {
         super(props);
 
-        let dateTime = moment.utc().format(props.format);;
+        let dateTime = moment.utc().format(props.format);
 
         if (props.dateTime) {
             dateTime = moment.utc(props.dateTime);
@@ -92,7 +92,7 @@ export default class DateTimeField extends Component {
         dateTime: PropTypes.oneOfType([
             PropTypes.string,
             PropTypes.number,
-            PropTypes.instanceOf(moment),
+            PropTypes.instanceOf(Date),
         ]),
         onChange: PropTypes.func,
         onBlur: PropTypes.func,
