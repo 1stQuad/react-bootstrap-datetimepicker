@@ -43,10 +43,10 @@ export default class DateTimePickerDays extends Component {
       .clone()
       .add(42, 'd');
     minDate = this.props.minDate
-      ? this.props.minDate.clone().subtract(1, 'days')
+      ? moment.utc(this.props.minDate).clone().subtract(1, 'days')
       : this.props.minDate;
     maxDate = this.props.maxDate
-      ? this.props.maxDate.clone()
+      ? moment.utc(this.props.maxDate).clone()
       : this.props.maxDate;
     html = [];
     cells = [];

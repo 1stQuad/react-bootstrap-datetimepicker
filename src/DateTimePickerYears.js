@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import moment from "moment/moment";
 
 export default class DateTimePickerYears extends Component {
   static propTypes = {
@@ -16,10 +17,10 @@ export default class DateTimePickerYears extends Component {
   renderYears = () => {
     var classes, year, years, minDate, maxDate;
     minDate = this.props.minDate
-      ? this.props.minDate.clone()
+      ? moment.utc(this.props.minDate).clone()
       : this.props.minDate;
     maxDate = this.props.maxDate
-      ? this.props.maxDate.clone()
+      ? moment.utc(this.props.maxDate).clone()
       : this.props.maxDate;
     years = [];
     year = parseInt(this.props.viewDate.year() / 10, 10) * 10;
