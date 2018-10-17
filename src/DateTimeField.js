@@ -10,6 +10,7 @@ export default class DateTimeField extends Component {
         dateTime: Date,
         format: 'x',
         showToday: true,
+        unlimited: false,
         viewMode: 'days',
         validationClass: '',
         daysOfWeekDisabled: [],
@@ -124,6 +125,7 @@ export default class DateTimeField extends Component {
         ]),
         showPeriod: PropTypes.bool,
         showInputIcon: PropTypes.bool,
+        unlimited: PropTypes.bool,
         disabled: PropTypes.bool,
         daysOfWeekDisabled: PropTypes.arrayOf(PropTypes.number),
         isValid: PropTypes.bool,
@@ -615,6 +617,7 @@ export default class DateTimeField extends Component {
                     maxDate={this.props.maxDate}
                     minDate={this.props.minDate}
                     mode={this.props.mode}
+                    unlimited={this.props.unlimited}
                     ref={el => {
                         this.widget = el;
                     }}
