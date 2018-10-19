@@ -9,16 +9,7 @@
   },
   "main": "./lib/DateTimeField.js",
   "scripts": {
-    "release": "npm run build-npm && cross-env npm version $RELEASE -m \"Bump version to %s\" && npm publish && git push --tags origin master",
-    "patch-release": "cross-env RELEASE=patch npm run release",
-    "minor-release": "cross-env RELEASE=minor npm run release",
-    "major-release": "cross-env RELEASE=major npm run release",
-    "build-npm": "babel --stage 0 ./src -d ./lib --ignore __tests__/*",
-    "build": "cross-env NODE_ENV=production webpack --output-filename react-bootstrap-datetimepicker.js",
-    "build-min": "cross-env NODE_ENV=production COMPRESS=1 webpack --output-filename react-bootstrap-datetimepicker.min.js",
-    "test": "jest",
-    "examples": "webpack-dev-server --config ./examples/webpack.config.js",
-    "lint": "eslint src --fix"
+    "build-npm": "babel --stage 0 ./src -d ./lib --ignore __tests__/*"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
