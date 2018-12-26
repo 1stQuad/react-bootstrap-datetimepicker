@@ -47,6 +47,7 @@ export default class DateTimePicker extends Component {
     setSelectedMinute: PropTypes.func,
     setToday: PropTypes.func,
     calculatePosition: PropTypes.func,
+    startOfWeek: PropTypes.string,
   };
 
   renderDatePicker = () => {
@@ -74,6 +75,7 @@ export default class DateTimePicker extends Component {
             mode={this.props.mode}
             calculatePosition={this.props.calculatePosition}
             showPicker={this.props.showPicker}
+            startOfWeek={this.props.startOfWeek}
           />
         </li>
       );
@@ -127,9 +129,7 @@ export default class DateTimePicker extends Component {
           <span
             className={classNames(
               'fa',
-              this.props.showTimePicker
-                ? 'fa-calendar'
-                : 'fa-clock-o',
+              this.props.showTimePicker ? 'fa-calendar' : 'fa-clock-o',
             )}
           />
         </span>
@@ -154,7 +154,7 @@ export default class DateTimePicker extends Component {
       this.props.widgetClasses,
     );
 
-    if (this.props.disabled) return ('');
+    if (this.props.disabled) return '';
 
     return (
       <div className={widgetClass} style={this.props.widgetStyle}>

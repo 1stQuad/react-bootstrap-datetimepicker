@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import classnames from 'classnames';
 
+const isoWeekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+const weekDays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
 export default class DateTimePickerDays extends Component {
   static propTypes = {
     subtractMonth: PropTypes.func.isRequired,
@@ -15,41 +18,35 @@ export default class DateTimePickerDays extends Component {
     showMonths: PropTypes.func.isRequired,
     minDate: PropTypes.object,
     maxDate: PropTypes.object,
+    startOfWeek: PropTypes.string,
   };
 
   static defaultProps = {
     showToday: true,
     daysOfWeekDisabled: [],
+    startOfWeek: 'isoWeek',
   };
 
   renderDays = () => {
-    var cells,
-      classes,
-      days,
-      html,
-      month,
-      nextMonth,
-      prevMonth,
-      minDate,
-      maxDate,
-      row,
-      year;
-    year = this.props.viewDate.year();
-    month = this.props.viewDate.month();
-    prevMonth = this.props.viewDate.clone().subtract(1, 'months');
-    days = prevMonth.daysInMonth();
-    prevMonth.date(days).startOf('week');
-    nextMonth = moment(prevMonth)
+    let cells = [];
+    let classes;
+    let row;
+    const year = this.props.viewDate.year();
+    const month = this.props.viewDate.month();
+    const prevMonth = this.props.viewDate.clone().subtract(1, 'months');
+    let days = prevMonth.daysInMonth();
+    prevMonth.date(days).startOf(this.props.startOfWeek);
+    const nextMonth = moment(prevMonth)
       .clone()
       .add(42, 'd');
-    minDate = this.props.minDate
+    const minDate = this.props.minDate
       ? this.props.minDate.clone().subtract(1, 'days')
       : this.props.minDate;
-    maxDate = this.props.maxDate
+    const maxDate = this.props.maxDate
       ? this.props.maxDate.clone()
       : this.props.maxDate;
-    html = [];
-    cells = [];
+    let html = [];
+
     while (prevMonth.isBefore(nextMonth)) {
       classes = {
         day: true,
@@ -96,7 +93,9 @@ export default class DateTimePickerDays extends Component {
         <td
           className={classnames(classes)}
           key={prevMonth.month() + '-' + prevMonth.date()}
-          onClick={!classes.softDisabled ? this.props.setSelectedDate : undefined}
+          onClick={
+            !classes.softDisabled ? this.props.setSelectedDate : undefined
+          }
         >
           {prevMonth.date()}
         </td>,
@@ -104,7 +103,7 @@ export default class DateTimePickerDays extends Component {
       if (
         prevMonth.weekday() ===
         moment()
-          .endOf('week')
+          .endOf(this.props.startOfWeek)
           .weekday()
       ) {
         row = <tr key={prevMonth.month() + '-' + prevMonth.date()}>{cells}</tr>;
@@ -147,26 +146,26 @@ export default class DateTimePickerDays extends Component {
               </th>
             </tr>
 
-            <tr>
-              <th className="dow">Su</th>
-
-              <th className="dow">Mo</th>
-
-              <th className="dow">Tu</th>
-
-              <th className="dow">We</th>
-
-              <th className="dow">Th</th>
-
-              <th className="dow">Fr</th>
-
-              <th className="dow">Sa</th>
-            </tr>
+            <tr>{this.renderWeekHeader()}</tr>
           </thead>
 
           <tbody>{this.renderDays()}</tbody>
         </table>
       </div>
     );
+  }
+
+  renderWeekHeader() {
+    let days = [];
+    const dayList =
+      this.props.startOfWeek === 'isoWeek' ? isoWeekDays : weekDays;
+    dayList.forEach(day =>
+      days.push(
+        <th className="dow" key={day}>
+          {day}
+        </th>,
+      ),
+    );
+    return days;
   }
 }
