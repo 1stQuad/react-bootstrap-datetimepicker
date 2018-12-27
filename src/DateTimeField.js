@@ -24,7 +24,7 @@ export default class DateTimeField extends Component {
   constructor(props) {
     super(props);
 
-    var dateTime = moment().format(props.format);
+    let dateTime = moment().format(props.format);
     if (props.dateTime && moment.isMoment(props.dateTime)) {
       dateTime = props.dateTime;
     } else if (moment(props.dateTime, props.format, true).isValid()) {
@@ -32,12 +32,17 @@ export default class DateTimeField extends Component {
     }
 
     this.state = {
-      showDatePicker: props.mode !== Constants.MODE_TIME && props.viewMode !== Constants.MODE_TIME,
-      showTimePicker: props.mode === Constants.MODE_TIME || props.viewMode === Constants.MODE_TIME,
+      showDatePicker:
+        props.mode !== Constants.MODE_TIME &&
+        props.viewMode !== Constants.MODE_TIME,
+      showTimePicker:
+        props.mode === Constants.MODE_TIME ||
+        props.viewMode === Constants.MODE_TIME,
       inputDisplayFormat: this.resolvePropsInputDisplayFormat(),
       inputFormat: this.resolvePropsInputFormat(),
       buttonIcon:
-        props.mode === Constants.MODE_TIME || props.viewMode === Constants.MODE_TIME
+        props.mode === Constants.MODE_TIME ||
+        props.viewMode === Constants.MODE_TIME
           ? 'fa-clock-o'
           : 'fa-calendar',
       widgetStyle: {
@@ -49,7 +54,9 @@ export default class DateTimeField extends Component {
       viewDate: moment(dateTime, this.props.format).startOf('month'),
       selectedDate: moment(dateTime, this.props.format),
       inputValue: props.dateTime
-        ? moment(dateTime, this.props.format).format(this.resolvePropsInputDisplayFormat())
+        ? moment(dateTime, this.props.format).format(
+            this.resolvePropsInputDisplayFormat(),
+          )
         : '',
       isValid: true,
     };
@@ -126,6 +133,7 @@ export default class DateTimeField extends Component {
     daysOfWeekDisabled: PropTypes.arrayOf(PropTypes.number),
     isValid: PropTypes.bool,
     name: PropTypes.string,
+    startOfWeek: PropTypes.string,
     tabIndex: PropTypes.string,
     validationClass: PropTypes.string,
   };
@@ -139,7 +147,10 @@ export default class DateTimeField extends Component {
       state.viewDate = moment(now, nextProps.format, true).startOf('month');
       state.selectedDate = moment(now, nextProps.format, true);
       state.inputValue = '';
-    } else if (moment.isMoment(nextProps.dateTime) && nextProps.dateTime.isValid()) {
+    } else if (
+      moment.isMoment(nextProps.dateTime) &&
+      nextProps.dateTime.isValid()
+    ) {
       state.viewDate = moment(nextProps.dateTime).startOf('month');
       state.selectedDate = moment(nextProps.dateTime);
       state.inputValue = moment(nextProps.dateTime).format(
@@ -189,10 +200,7 @@ export default class DateTimeField extends Component {
         inputValue: formatValue,
       },
       function() {
-        return this.props[eventName](
-          inputDate,
-          formatValue,
-        );
+        return this.props[eventName](inputDate, formatValue);
       },
     );
   }
@@ -224,14 +232,18 @@ export default class DateTimeField extends Component {
   };
 
   checkIsValid = value => {
-      const date = moment(value, this.state.inputFormat, true);
-      if (date.isValid()) {
-        const min = this.props.minDate ? date.isAfter( this.props.minDate.clone().subtract(1, 'days') ) : true;
-        const max = this.props.maxDate ? date.isBefore(this.props.maxDate.clone().add(1, 'days')) : true;
-          return (min && max);
-      } else {
-          return false;
-      }
+    const date = moment(value, this.state.inputFormat, true);
+    if (date.isValid()) {
+      const min = this.props.minDate
+        ? date.isAfter(this.props.minDate.clone().subtract(1, 'days'))
+        : true;
+      const max = this.props.maxDate
+        ? date.isBefore(this.props.maxDate.clone().add(1, 'days'))
+        : true;
+      return min && max;
+    } else {
+      return false;
+    }
   };
 
   setIsValid = isValid => {
@@ -254,9 +266,7 @@ export default class DateTimeField extends Component {
         },
         function() {
           this.closePicker();
-          this.props.onChange(
-            this.state.selectedDate,
-          );
+          this.props.onChange(this.state.selectedDate);
           return this.setState({
             inputValue: this.state.selectedDate.format(
               this.state.inputDisplayFormat,
@@ -371,8 +381,8 @@ export default class DateTimeField extends Component {
   };
 
   addHour = () => {
-      this.setIsValid(true);
-      return this.setState(
+    this.setIsValid(true);
+    return this.setState(
       {
         selectedDate: this.state.selectedDate.clone().add(1, 'hours'),
       },
@@ -481,7 +491,7 @@ export default class DateTimeField extends Component {
   };
 
   setToday = () => {
-    var today = moment();
+    const today = moment();
     if (
       this.props.dateTime &&
       moment.isMoment(this.props.dateTime) &&
@@ -507,10 +517,7 @@ export default class DateTimeField extends Component {
   };
 
   calculatePosition = options => {
-    let classes,
-      styles;
-
-    classes = {};
+    let classes = {};
     if (options) {
       classes['months'] = options.monthsDisplayed;
       classes['years'] = options.yearsDisplayed;
@@ -524,7 +531,7 @@ export default class DateTimeField extends Component {
       classes.top = false;
       classes.bottom = true;
     }
-    styles = {
+    const styles = {
       display: 'block',
       position: 'absolute',
     };
@@ -592,16 +599,18 @@ export default class DateTimeField extends Component {
   render() {
     let pickerClass = 'bootstrap-datetimepicker-wrap';
     if (this.state.showPicker) {
-      pickerClass += " datetimepicker-show";
+      pickerClass += ' datetimepicker-show';
     }
     if (this.props.validationClass) {
-      pickerClass += " " + this.props.validationClass;
+      pickerClass += ' ' + this.props.validationClass;
     }
     return (
-        <div className={pickerClass}
-           ref={el => {
-               this.wrapper = el;
-           }}>
+      <div
+        className={pickerClass}
+        ref={el => {
+          this.wrapper = el;
+        }}
+      >
         {this.renderOverlay()}
         <DateTimePicker
           addDecade={this.addDecade}
@@ -642,6 +651,7 @@ export default class DateTimeField extends Component {
           widgetStyle={this.state.widgetStyle}
           calculatePosition={this.calculatePosition}
           showPicker={this.state.showPicker}
+          startOfWeek={this.props.startOfWeek}
         />
         <div
           className={classnames('date ', {
@@ -653,7 +663,7 @@ export default class DateTimeField extends Component {
           }}
         >
           <input
-            className={"form-control " + this.size()}
+            className={'form-control ' + this.size()}
             onChange={this.onChange}
             onBlur={this.onBlur}
             type="text"

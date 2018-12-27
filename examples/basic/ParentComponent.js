@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import DateTimeField from "react-bootstrap-datetimepicker";
+import React, { Component } from 'react';
+import DateTimeField from 'react-bootstrap-datetimepicker';
 import moment from 'moment';
 
 class ParentComponent extends Component {
@@ -7,29 +7,33 @@ class ParentComponent extends Component {
     super(props);
     this.state = {
       date: moment(),
-      format: "YYYY-MM-DD",
-      inputFormat: "YYYY-MM-DD",
-      mode: "date"
+      format: 'YYYY-MM-DD',
+      inputFormat: 'YYYY-MM-DD',
+      mode: 'date',
+      startOfWeek: 'week',
     };
   }
 
-  handleChange = (newDate) => {
-    console.log("newDate", newDate);
-    return this.setState({date: newDate});
-  }
+  handleChange = newDate => {
+    console.log('newDate', newDate);
+    return this.setState({ date: newDate });
+  };
 
   render() {
-      const minimalDate = moment('01.01.2017', 'DD.MM.YYYY');
-      const {date, format, mode, inputFormat} = this.state;
-      console.log(minimalDate);
-    return (<DateTimeField
-      dateTime={date}
-      format={format}
-      minDate={minimalDate}
-      inputFormat={inputFormat}
-      onChange={this.handleChange}
-      viewMode={mode}
-    />);
+    const minimalDate = moment('01.01.2017', 'DD.MM.YYYY');
+    const { date, format, mode, inputFormat, startOfWeek } = this.state;
+    console.log(minimalDate);
+    return (
+      <DateTimeField
+        dateTime={date}
+        format={format}
+        minDate={minimalDate}
+        inputFormat={inputFormat}
+        onChange={this.handleChange}
+        viewMode={mode}
+        startOfWeek={startOfWeek}
+      />
+    );
   }
 }
 module.exports = ParentComponent;

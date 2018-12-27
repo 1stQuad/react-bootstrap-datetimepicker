@@ -31,6 +31,7 @@ export default class DateTimePickerDate extends Component {
     minDate: PropTypes.object,
     maxDate: PropTypes.object,
     calculatePosition: PropTypes.func,
+    startOfWeek: PropTypes.string,
   };
 
   constructor(props) {
@@ -61,17 +62,21 @@ export default class DateTimePickerDate extends Component {
     }
   }
 
-    componentWillReceiveProps(newProps) {
-        if (!this.props.showPicker && newProps.showPicker && !this.state.daysDisplayed) {
-            this.setState({
-                daysDisplayed: true,
-                monthsDisplayed: false,
-                yearsDisplayed: false
-            });
-        }
+  componentWillReceiveProps(newProps) {
+    if (
+      !this.props.showPicker &&
+      newProps.showPicker &&
+      !this.state.daysDisplayed
+    ) {
+      this.setState({
+        daysDisplayed: true,
+        monthsDisplayed: false,
+        yearsDisplayed: false,
+      });
     }
+  }
 
-    showMonths = () => {
+  showMonths = () => {
     return this.setState({
       daysDisplayed: false,
       monthsDisplayed: true,
@@ -136,6 +141,7 @@ export default class DateTimePickerDate extends Component {
           showToday={this.props.showToday}
           subtractMonth={this.props.subtractMonth}
           viewDate={this.props.viewDate}
+          startOfWeek={this.props.startOfWeek}
         />
       );
     } else {

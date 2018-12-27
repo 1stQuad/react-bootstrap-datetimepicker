@@ -51,6 +51,7 @@ DateTimeField
 | **mode** | string | undefined | Allows to selectively display only the time picker ('time'), date picker ('date'), date-timepicker ('datetime') or month picker ('month') |
 | **defaultText** | string | undefined | Sets the input's placeholder value. Could be an empty string, or helper text. |
 | **name** | string | undefined | Sets the name of the input element. |
+| **startOfWeek** | string | "isoWeek" | Define start of week day. ('isoWeek' - from Monday, 'week' - from Sunday) |
 | **tabIndex** | string | undefined | Sets the tabIndex of the input element. |
 
 

@@ -231,11 +231,11 @@ describe('DateTimeField', function() {
 
       it('should not format input when event is onChange', () => {
         component.yearDigits = yearDigitsMock.mockImplementation(() => 4);
-        const date = '12/1/2016';
+        const date = '12/01/2016';
 
         component.formatValueForEvent('onChange', date);
 
-        expect(setStateMock.mock.calls[1][0].inputValue).toEqual('12/1/2016');
+        expect(setStateMock.mock.calls[1][0].inputValue).toEqual('12/01/2016');
       });
     });
 
