@@ -15,14 +15,12 @@ class ParentComponent extends Component {
   }
 
   handleChange = newDate => {
-    console.log('newDate', newDate);
     return this.setState({ date: newDate });
   };
 
   render() {
     const minimalDate = moment('01.01.2017', 'DD.MM.YYYY');
     const { date, format, mode, inputFormat, startOfWeek } = this.state;
-    console.log(minimalDate);
     return (
       <DateTimeField
         dateTime={date}
