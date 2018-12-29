@@ -52,6 +52,7 @@ DateTimeField
 | **defaultText** | string | undefined | Sets the input's placeholder value. Could be an empty string, or helper text. |
 | **name** | string | undefined | Sets the name of the input element. |
 | **tabIndex** | string | undefined | Sets the tabIndex of the input element. |
+| **startOfWeek** | string | "isoWeek" | Define start of week day. ('isoWeek' - from Monday, 'week' - from Sunday) |
 
 
 Default Format Based on Mode

@@ -31,6 +31,7 @@ export default class DateTimePickerDate extends Component {
         minDate: PropTypes.object,
         maxDate: PropTypes.object,
         calculatePosition: PropTypes.func,
+        startOfWeek: PropTypes.string,
     };
 
     constructor(props) {
@@ -136,6 +137,7 @@ export default class DateTimePickerDate extends Component {
                     showToday={this.props.showToday}
                     subtractMonth={this.props.subtractMonth}
                     viewDate={this.props.viewDate}
+                    startOfWeek={this.props.startOfWeek}
                 />
             );
         } else {
