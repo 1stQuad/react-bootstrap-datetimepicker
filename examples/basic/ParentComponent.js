@@ -6,7 +6,7 @@ class ParentComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: moment(),
+      date: new Date(),
       format: 'YYYY-MM-DD',
       inputFormat: 'YYYY-MM-DD',
       mode: 'date',
