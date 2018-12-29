@@ -98,6 +98,7 @@ export default class DateTimeField extends Component {
       PropTypes.string,
       PropTypes.number,
       PropTypes.instanceOf(moment),
+      PropTypes.instanceOf(Date),
     ]),
     onChange: PropTypes.func,
     onBlur: PropTypes.func,
