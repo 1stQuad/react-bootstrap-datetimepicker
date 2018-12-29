@@ -37,7 +37,7 @@ DateTimeField
 | **format**   | string  | "x"     | Defines the format moment.js should use to parse and output the date to onChange |
 | **inputFormat** | string or array | *see default format table below* | Defines the *accepted* date formats in the HTML input. It must be a format understandable by moment.js |
 | **inputDisplayFormat** | string |  When there is **_no inputFormat given_**:<br> *see default format table below*. <br><br> When an **_inputFormat_** is given and it is a **string**: it takes the inputFormat. <br><br> When the **_inputFormat_** is an **array**: it takes the first inputFormat.  | Defines the *display* format of the date in the HTML input. It must be a format understandable by moment.js. <br><br> If there is an **_inputFormat_** given, the inputDisplayFormat must be one of the formats listed in the inputFormat|
-| **onChange** | function | x => console.log(x) | Callback trigger when the date changes. `x` is the new datetime value (value typeOf is Date). |
+| **onChange** | function | x => console.log(x) | Callback trigger when the date changes. `x` is the new datetime value. |
 | **onBlur** | function | () => {} | Callback trigger when the date field blurs. |
 | **onEnterKeyDown** | function | () => {} | Callback trigger when the Enter key is pressed. |
 | **showToday** | boolean | true | Highlights today's date |
@@ -51,7 +51,6 @@ DateTimeField
 | **mode** | string | undefined | Allows to selectively display only the time picker ('time'), date picker ('date'), date-timepicker ('datetime') or month picker ('month') |
 | **defaultText** | string | undefined | Sets the input's placeholder value. Could be an empty string, or helper text. |
 | **name** | string | undefined | Sets the name of the input element. |
-| **startOfWeek** | string | "isoWeek" | Define start of week day. ('isoWeek' - from Monday, 'week' - from Sunday) |
 | **tabIndex** | string | undefined | Sets the tabIndex of the input element. |
 
 
