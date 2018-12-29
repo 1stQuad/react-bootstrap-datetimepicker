@@ -33,7 +33,7 @@ DateTimeField
 
 | Name         | Type    | Default | Description |
 | ------------ | ------- | ------- | ----------- |
-| **dateTime** | string or moment | moment().format('x') | Represents the initial dateTime. If this is a string it will be parsed by moment.js using **format**, otherwise an existing moment instance may be used. |
+| **dateTime** | string or moment | moment.utc().format('x') | Represents the initial dateTime. If this is a string it will be parsed by moment.js using **format**, otherwise an existing moment instance may be used. |
 | **format**   | string  | "x"     | Defines the format moment.js should use to parse and output the date to onChange |
 | **inputFormat** | string or array | *see default format table below* | Defines the *accepted* date formats in the HTML input. It must be a format understandable by moment.js |
 | **inputDisplayFormat** | string |  When there is **_no inputFormat given_**:<br> *see default format table below*. <br><br> When an **_inputFormat_** is given and it is a **string**: it takes the inputFormat. <br><br> When the **_inputFormat_** is an **array**: it takes the first inputFormat.  | Defines the *display* format of the date in the HTML input. It must be a format understandable by moment.js. <br><br> If there is an **_inputFormat_** given, the inputDisplayFormat must be one of the formats listed in the inputFormat|
