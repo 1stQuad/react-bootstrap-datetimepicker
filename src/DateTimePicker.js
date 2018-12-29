@@ -48,6 +48,7 @@ export default class DateTimePicker extends Component {
         setSelectedMinute: PropTypes.func,
         setToday: PropTypes.func,
         calculatePosition: PropTypes.func,
+        startOfWeek: PropTypes.string,
     };
 
     renderDatePicker = () => {
@@ -75,6 +76,7 @@ export default class DateTimePicker extends Component {
                         mode={this.props.mode}
                         calculatePosition={this.props.calculatePosition}
                         showPicker={this.props.showPicker}
+                        startOfWeek={this.props.startOfWeek}
                     />
                 </li>
             );

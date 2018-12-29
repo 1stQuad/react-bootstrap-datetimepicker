@@ -132,6 +132,7 @@ export default class DateTimeField extends Component {
         name: PropTypes.string,
         tabIndex: PropTypes.string,
         validationClass: PropTypes.string,
+        startOfWeek: PropTypes.string,
     };
 
     componentWillReceiveProps = nextProps => {
@@ -647,6 +648,7 @@ export default class DateTimeField extends Component {
                     widgetStyle={this.state.widgetStyle}
                     calculatePosition={this.calculatePosition}
                     showPicker={this.state.showPicker}
+                    startOfWeek={this.props.startOfWeek}
                 />
                 <div
                     className={classnames('date ', {

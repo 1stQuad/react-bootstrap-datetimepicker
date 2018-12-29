@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import classnames from 'classnames';
 
+const isoWeekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+const weekDays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
 export default class DateTimePickerDays extends Component {
     static propTypes = {
         subtractMonth: PropTypes.func.isRequired,
@@ -15,11 +18,13 @@ export default class DateTimePickerDays extends Component {
         showMonths: PropTypes.func.isRequired,
         minDate: PropTypes.object,
         maxDate: PropTypes.object,
+        startOfWeek: PropTypes.string,
     };
 
     static defaultProps = {
         showToday: true,
         daysOfWeekDisabled: [],
+        startOfWeek: 'isoWeek',
     };
 
     renderDays = () => {
@@ -38,7 +43,7 @@ export default class DateTimePickerDays extends Component {
         month = this.props.viewDate.month();
         prevMonth = this.props.viewDate.clone().subtract(1, 'months');
         days = prevMonth.daysInMonth();
-        prevMonth.date(days).startOf('week');
+        prevMonth.date(days).startOf(this.props.startOfWeek);
         nextMonth = moment.utc(prevMonth)
             .clone()
             .add(42, 'd');
@@ -104,7 +109,7 @@ export default class DateTimePickerDays extends Component {
             if (
                 prevMonth.weekday() ===
                 moment.utc()
-                    .endOf('week')
+                    .endOf(this.props.startOfWeek)
                     .weekday()
             ) {
                 row = <tr key={prevMonth.month() + '-' + prevMonth.date()}>{cells}</tr>;
@@ -147,26 +152,26 @@ export default class DateTimePickerDays extends Component {
                         </th>
                     </tr>
 
-                    <tr>
-                        <th className="dow">Su</th>
-
-                        <th className="dow">Mo</th>
-
-                        <th className="dow">Tu</th>
-
-                        <th className="dow">We</th>
-
-                        <th className="dow">Th</th>
-
-                        <th className="dow">Fr</th>
-
-                        <th className="dow">Sa</th>
-                    </tr>
+                    <tr>{this.renderWeekHeader()}</tr>
                     </thead>
 
                     <tbody>{this.renderDays()}</tbody>
                 </table>
             </div>
         );
+    }
+
+    renderWeekHeader() {
+        let days = [];
+        const dayList =
+            this.props.startOfWeek === 'isoWeek' ? isoWeekDays : weekDays;
+        dayList.forEach(day =>
+            days.push(
+                <th className="dow" key={day}>
+                    {day}
+                </th>,
+            ),
+        );
+        return days;
     }
 }
