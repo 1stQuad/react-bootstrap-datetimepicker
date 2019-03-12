@@ -11,6 +11,7 @@ class ParentComponent extends Component {
       inputFormat: 'YYYY-MM-DD',
       mode: 'date',
       startOfWeek: 'week',
+      availableDates: [new Date(Date.parse('2019-03-16T00:00:00Z')), new Date(Date.parse('2019-03-23T00:00:00Z'))]
     };
   }
 
@@ -20,7 +21,7 @@ class ParentComponent extends Component {
 
   render() {
     const minimalDate = moment('01.01.2017', 'DD.MM.YYYY');
-    const { date, format, mode, inputFormat, startOfWeek } = this.state;
+    const { date, format, mode, inputFormat, startOfWeek, availableDates } = this.state;
     return (
       <DateTimeField
         dateTime={date}
@@ -30,6 +31,7 @@ class ParentComponent extends Component {
         onChange={this.handleChange}
         viewMode={mode}
         startOfWeek={startOfWeek}
+        availableDates={availableDates}
       />
     );
   }

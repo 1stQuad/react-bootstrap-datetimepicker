@@ -9,6 +9,7 @@
   },
   "main": "./lib/DateTimeField.js",
   "scripts": {
+    "examples": "webpack-dev-server --config ./examples/webpack.config.js",
     "build-npm": "babel --stage 0 ./src -d ./lib --ignore __tests__/*"
   },
   "publishConfig": {
