@@ -32,6 +32,7 @@ export default class DateTimePickerDate extends Component {
         maxDate: PropTypes.object,
         calculatePosition: PropTypes.func,
         startOfWeek: PropTypes.string,
+        availableDatesString: PropTypes.string
     };
 
     constructor(props) {
@@ -138,6 +139,7 @@ export default class DateTimePickerDate extends Component {
                     subtractMonth={this.props.subtractMonth}
                     viewDate={this.props.viewDate}
                     startOfWeek={this.props.startOfWeek}
+                    availableDatesString={this.props.availableDatesString}
                 />
             );
         } else {
@@ -159,6 +161,7 @@ export default class DateTimePickerDate extends Component {
                     subtractYear={this.props.subtractYear}
                     viewDate={this.props.viewDate}
                     mode={this.props.mode}
+                    availableDatesString={this.props.availableDatesString}
                 />
             );
         } else {
@@ -177,6 +180,7 @@ export default class DateTimePickerDate extends Component {
                     setViewYear={this.setViewYear}
                     subtractDecade={this.props.subtractDecade}
                     viewDate={this.props.viewDate}
+                    availableDatesString={this.props.availableDatesString}
                 />
             );
         } else {

@@ -55,8 +55,17 @@ export default class DateTimeField extends Component {
                 ? moment.utc(dateTime, this.props.format).format(this.resolvePropsInputDisplayFormat())
                 : '',
             isValid: true,
+            availableDatesString: props.availableDates ? this.transformDateList(props.availableDates) : ''
         };
     }
+
+    transformDateList = (dates) => {
+        let dateList = [];
+        dates.forEach(date => {
+            dateList.push(`${date.getUTCDate()}${date.getUTCMonth()}${date.getUTCFullYear()}`);
+        });
+        return dateList.join(',');
+    };
 
     getDefaultDateFormat = () => {
         switch (this.props.mode) {
@@ -133,6 +142,7 @@ export default class DateTimeField extends Component {
         tabIndex: PropTypes.string,
         validationClass: PropTypes.string,
         startOfWeek: PropTypes.string,
+        availableDates: PropTypes.arrayOf(PropTypes.object)
     };
 
     componentWillReceiveProps = nextProps => {
@@ -165,6 +175,7 @@ export default class DateTimeField extends Component {
             ).format(state.inputDisplayFormat);
             state.isValid = this.checkIsValid(state.inputValue);
         }
+        state.availableDatesString = nextProps.availableDates ? this.transformDateList(nextProps.availableDates) : '';
         return this.setState(state);
     };
 
@@ -649,6 +660,7 @@ export default class DateTimeField extends Component {
                     calculatePosition={this.calculatePosition}
                     showPicker={this.state.showPicker}
                     startOfWeek={this.props.startOfWeek}
+                    availableDatesString={this.state.availableDatesString}
                 />
                 <div
                     className={classnames('date ', {
