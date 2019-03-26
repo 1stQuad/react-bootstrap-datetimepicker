@@ -52,7 +52,7 @@ export default class DateTimePickerMonths extends Component {
 
             if(!classes.softDisabled && this.props.availableDatesString) {
                 const date = currentMonth.toDate();
-                if (this.props.availableDatesString.indexOf(`${date.getUTCMonth()}${date.getUTCFullYear()}`) === -1)
+                if (this.props.availableDatesString.indexOf(`${date.getUTCMonth()}-${date.getUTCFullYear()}`) === -1)
                     classes.softDisabled = true;
             }
 

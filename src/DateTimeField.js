@@ -59,7 +59,7 @@ export default class DateTimeField extends Component {
     transformDateList = (dates) => {
         let dateList = [];
         dates.forEach(date => {
-            dateList.push(`${date.getUTCDate()}${date.getUTCMonth()}${date.getUTCFullYear()}`);
+            dateList.push(`${date.getUTCDate()}-${date.getUTCMonth()}-${date.getUTCFullYear()}`);
         });
         return dateList.join(',');
     };
