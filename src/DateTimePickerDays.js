@@ -19,7 +19,7 @@ export default class DateTimePickerDays extends Component {
         minDate: PropTypes.object,
         maxDate: PropTypes.object,
         startOfWeek: PropTypes.string,
-        availableDatesString: PropTypes.string
+        availableDatesStringArray: PropTypes.array(PropTypes.string)
     };
 
     static defaultProps = {
@@ -95,9 +95,9 @@ export default class DateTimePickerDays extends Component {
             ) {
                 classes.softDisabled = true;
             }
-            if (!classes.softDisabled && this.props.availableDatesString) {
+            if (!classes.softDisabled && this.props.availableDatesStringArray) {
                 const date = prevMonth.toDate();
-                if (this.props.availableDatesString.indexOf(`${date.getUTCDate()}-${date.getUTCMonth()}-${date.getUTCFullYear()}`) === -1)
+                if (this.props.availableDatesStringArray.indexOf(`${date.getUTCDate()}-${date.getUTCMonth()}-${date.getUTCFullYear()}`) === -1)
                     classes.softDisabled = true;
             }
 

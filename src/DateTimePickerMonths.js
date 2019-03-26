@@ -20,7 +20,7 @@ export default class DateTimePickerMonths extends Component {
             Constants.MODE_MONTH,
             Constants.MODE_DATETIME,
         ]),
-        availableDatesString: PropTypes.string
+        availableDatesStringArray: PropTypes.array(PropTypes.string)
     };
 
     renderMonths = () => {
@@ -50,9 +50,9 @@ export default class DateTimePickerMonths extends Component {
                 (maxDate && currentMonth.isAfter(maxDate)),
             };
 
-            if(!classes.softDisabled && this.props.availableDatesString) {
+            if(!classes.softDisabled && this.props.availableDatesStringArray) {
                 const date = currentMonth.toDate();
-                if (this.props.availableDatesString.indexOf(`${date.getUTCMonth()}-${date.getUTCFullYear()}`) === -1)
+                if (this.props.availableDatesStringArray.indexOf(`${date.getUTCMonth()}-${date.getUTCFullYear()}`) === -1)
                     classes.softDisabled = true;
             }
 
