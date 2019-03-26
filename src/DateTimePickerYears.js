@@ -35,7 +35,7 @@ export default class DateTimePickerYears extends Component {
                 (maxDate && year > maxDate.year()),
             };
 
-            if(!classes.softDisabled && this.props.availableDatesStringArray) {
+            if(!classes.softDisabled && this.props.availableDatesStringArray.length > 0) {
                 if (this.props.availableDatesStringArray.indexOf(year.toString()) === -1)
                     classes.softDisabled = true;
             }

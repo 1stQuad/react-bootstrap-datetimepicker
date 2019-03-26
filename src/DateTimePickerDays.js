@@ -95,7 +95,7 @@ export default class DateTimePickerDays extends Component {
             ) {
                 classes.softDisabled = true;
             }
-            if (!classes.softDisabled && this.props.availableDatesStringArray) {
+            if (!classes.softDisabled && this.props.availableDatesStringArray.length > 0) {
                 const date = prevMonth.toDate();
                 if (this.props.availableDatesStringArray.indexOf(`${date.getUTCDate()}-${date.getUTCMonth()}-${date.getUTCFullYear()}`) === -1)
                     classes.softDisabled = true;

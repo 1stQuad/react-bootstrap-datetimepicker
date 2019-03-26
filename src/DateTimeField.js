@@ -52,7 +52,7 @@ export default class DateTimeField extends Component {
                 ? moment.utc(dateTime, this.props.format).format(this.resolvePropsInputDisplayFormat())
                 : '',
             isValid: true,
-            availableDatesStringArray: props.availableDates ? this.transformDateList(props.availableDates) : ''
+            availableDatesStringArray: props.availableDates ? this.transformDateList(props.availableDates) : []
         };
     }
 
@@ -172,7 +172,7 @@ export default class DateTimeField extends Component {
             ).format(state.inputDisplayFormat);
             state.isValid = this.checkIsValid(state.inputValue);
         }
-        state.availableDatesStringArray = nextProps.availableDates ? this.transformDateList(nextProps.availableDates) : '';
+        state.availableDatesStringArray = nextProps.availableDates ? this.transformDateList(nextProps.availableDates) : [];
         return this.setState(state);
     };
 
