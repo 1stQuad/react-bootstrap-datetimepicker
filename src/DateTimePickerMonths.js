@@ -20,7 +20,7 @@ export default class DateTimePickerMonths extends Component {
             Constants.MODE_MONTH,
             Constants.MODE_DATETIME,
         ]),
-        availableDatesStringArray: PropTypes.array(PropTypes.string)
+        availableDatesStringArray: PropTypes.arrayOf(PropTypes.string)
     };
 
     renderMonths = () => {

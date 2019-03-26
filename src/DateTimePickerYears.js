@@ -12,7 +12,7 @@ export default class DateTimePickerYears extends Component {
         setViewYear: PropTypes.func.isRequired,
         minDate: PropTypes.object,
         maxDate: PropTypes.object,
-        availableDatesStringArray: PropTypes.array(PropTypes.string)
+        availableDatesStringArray: PropTypes.arrayOf(PropTypes.string)
     };
 
     renderYears = () => {

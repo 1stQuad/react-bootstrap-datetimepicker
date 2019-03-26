@@ -32,7 +32,7 @@ export default class DateTimePickerDate extends Component {
         maxDate: PropTypes.object,
         calculatePosition: PropTypes.func,
         startOfWeek: PropTypes.string,
-        availableDatesStringArray: PropTypes.array(PropTypes.string)
+        availableDatesStringArray: PropTypes.arrayOf(PropTypes.string)
     };
 
     constructor(props) {

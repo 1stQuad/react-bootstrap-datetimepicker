@@ -19,7 +19,7 @@ export default class DateTimePickerDays extends Component {
         minDate: PropTypes.object,
         maxDate: PropTypes.object,
         startOfWeek: PropTypes.string,
-        availableDatesStringArray: PropTypes.array(PropTypes.string)
+        availableDatesStringArray: PropTypes.arrayOf(PropTypes.string)
     };
 
     static defaultProps = {
