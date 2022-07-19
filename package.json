@@ -22,7 +22,7 @@
     "datetimepicker",
     "datetime"
   ],
-  "author": "Maksim Makarevich",
+  "author": "1stQuad Solutions AG",
   "license": "MIT",
   "peerDependencies": {
     "react": ">=15.6"
