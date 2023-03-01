@@ -553,7 +553,7 @@ export default class DateTimeField extends Component {
         }
     };
 	
-	toggle = () => {
+	toggleOverlay = () => {
         let displayOptions = {};
 
         if (this.state.showPicker) {
@@ -693,9 +693,7 @@ export default class DateTimeField extends Component {
                     <span
                         className="input-group-addon"
                         onBlur={this.onBlur}
-						onClick={() => {
-                            this.toggleOverlay();
-                        }}
+						onClick={this.toggleOverlay}
                         hidden={!this.props.showInputIcon}
                         ref={el => {
                             this.dtpbutton = el;
