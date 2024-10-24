@@ -2,7 +2,7 @@
  * Datetimepicker for Bootstrap v3
  * https://github.com/Eonasdan/bootstrap-datetimepicker/
  */
-.bootstrap-datetimepicker-widget {
+ .bootstrap-datetimepicker-widget {
   top: 0;
   left: 0;
   width: 250px;
@@ -225,6 +225,14 @@
   position: relative;
 }
 
+.bootstrap-datetimepicker-wrap .input-group-addon {
+  position: absolute;
+  right: 5px;
+  top: 4px;
+  bottom: 4px;
+  opacity: 0.5;
+  cursor: pointer;
+}
 .bootstrap-datetimepicker-wrap.is-invalid ~ .invalid-feedback{
   display: block;
 }
@@ -275,4 +283,21 @@
 
 .bootstrap-datetimepicker-widget .btn-today{
   padding: 3px 0;
+}
+.bootstrap-datetimepicker-widget.bottom {
+  top: 100%;
+  bottom: unset;
+}
+
+.bootstrap-datetimepicker-widget.bottom.dropdown-menu {
+  margin-top: 6px;
+}
+
+.bootstrap-datetimepicker-widget.top {
+  top: unset;
+  bottom: 100%;
+}
+
+.bootstrap-datetimepicker-widget.top.dropdown-menu {
+  margin-bottom: 6px;
 }

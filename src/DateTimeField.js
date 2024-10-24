@@ -520,27 +520,38 @@ export default class DateTimeField extends Component {
     };
 
     calculatePosition = options => {
-        let classes,
-            styles;
+        let classes = {};
+        let styles = {
+            display: 'block',
+            position: 'absolute'
+        };
 
-        classes = {};
         if (options) {
             classes['months'] = options.monthsDisplayed;
             classes['years'] = options.yearsDisplayed;
             classes['days'] = options.daysDisplayed;
             classes['time'] = options.timeDisplayed;
         }
-        if (this.props.direction === 'up' || this.props.direction === 'auto') {
+
+        const wrapRect = this.wrapper.getBoundingClientRect();
+        const widgetRect = this.widget.getBoundingClientRect();
+        const widgetHeight = widgetRect.height;
+        const fitTop = wrapRect.top - widgetHeight >= 0;
+        const fitBottom = document.documentElement.clientHeight > wrapRect.bottom + widgetHeight;
+
+        const placement = this.props.direction === 'up' || this.props.direction === 'auto' ? 'top' : 'bottom';
+        const top = placement === 'top' && fitTop || placement === 'bottom' && !fitBottom;
+        const bottom = placement === 'bottom' && fitBottom || placement === 'top' && !fitTop;
+
+        if (top) {
             classes.top = true;
             classes.bottom = false;
-        } else {
+        }
+        if (bottom) {
             classes.top = false;
             classes.bottom = true;
         }
-        styles = {
-            display: 'block',
-            position: 'absolute',
-        };
+
         return this.setState({
             widgetStyle: styles,
             widgetClasses: classes,
@@ -633,9 +644,7 @@ export default class DateTimeField extends Component {
                     minDate={this.props.minDate}
                     mode={this.props.mode}
                     unlimited={this.props.unlimited}
-                    ref={el => {
-                        this.widget = el;
-                    }}
+                    widgetRef={el => this.widget = el}
                     selectedDate={this.state.selectedDate}
                     setSelectedMonth={this.setSelectedMonth}
                     setSelectedDate={this.setSelectedDate}
