@@ -44,6 +44,7 @@ export default class DateTimePicker extends Component {
         widgetClasses: PropTypes.object,
         widgetStyle: PropTypes.object,
         togglePicker: PropTypes.func,
+        widgetRef: PropTypes.func,
         setSelectedHour: PropTypes.func,
         setSelectedMinute: PropTypes.func,
         setToday: PropTypes.func,
@@ -163,7 +164,7 @@ export default class DateTimePicker extends Component {
         if (this.props.disabled) return ('');
 
         return (
-            <div className={widgetClass} style={this.props.widgetStyle}>
+            <div ref={this.props.widgetRef} className={widgetClass} style={this.props.widgetStyle}>
                 <ul className="list-unstyled">
                     {this.renderDatePicker()}
 
