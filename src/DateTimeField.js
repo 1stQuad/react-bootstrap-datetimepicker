@@ -31,6 +31,8 @@ export default class DateTimeField extends Component {
             dateTime = moment.utc(props.dateTime);
         }
 
+        this.wrapperRef = React.createRef();
+        this.widgetRef = React.createRef();
         this.state = {
             showDatePicker: props.mode !== Constants.MODE_TIME && props.viewMode !== Constants.MODE_TIME,
             showTimePicker: props.mode === Constants.MODE_TIME || props.viewMode === Constants.MODE_TIME,
@@ -523,7 +525,7 @@ export default class DateTimeField extends Component {
         let classes = {};
         let styles = {
             display: 'block',
-            position: 'absolute'
+            position: 'fixed'
         };
 
         if (options) {
@@ -533,11 +535,15 @@ export default class DateTimeField extends Component {
             classes['time'] = options.timeDisplayed;
         }
 
-        const wrapRect = this.wrapper.getBoundingClientRect();
-        const widgetRect = this.widget.getBoundingClientRect();
-        const widgetHeight = widgetRect.height;
-        const fitTop = wrapRect.top - widgetHeight >= 0;
-        const fitBottom = document.documentElement.clientHeight > wrapRect.bottom + widgetHeight;
+        if (!this.wrapperRef.current || !this.widgetRef.current) {
+            return;
+        }
+        const fieldRect = this.wrapperRef.current.getBoundingClientRect();
+        const widgetRect = this.widgetRef.current.getBoundingClientRect();
+        const arrowIndent = 6;
+        const widgetHeight = widgetRect.height + arrowIndent;
+        const fitTop = fieldRect.top - widgetHeight > 0;
+        const fitBottom = fieldRect.bottom + widgetHeight < document.documentElement.clientHeight;
 
         const placement = this.props.direction === 'up' || this.props.direction === 'auto' ? 'top' : 'bottom';
         const top = placement === 'top' && fitTop || placement === 'bottom' && !fitBottom;
@@ -546,10 +552,14 @@ export default class DateTimeField extends Component {
         if (top) {
             classes.top = true;
             classes.bottom = false;
+            styles.top = `${fieldRect.top - widgetHeight}px`;
+            styles.left = `${fieldRect.left}px`;
         }
         if (bottom) {
             classes.top = false;
             classes.bottom = true;
+            styles.top = `${fieldRect.bottom}px`;
+            styles.left = `${fieldRect.left}px`;
         }
 
         return this.setState({
@@ -628,10 +638,7 @@ export default class DateTimeField extends Component {
             pickerClass += " " + this.props.validationClass;
         }
         return (
-            <div className={pickerClass}
-                 ref={el => {
-                     this.wrapper = el;
-                 }}>
+            <div ref={this.wrapperRef} className={pickerClass}>
                 {this.renderOverlay()}
                 <DateTimePicker
                     addDecade={this.addDecade}
@@ -644,7 +651,7 @@ export default class DateTimeField extends Component {
                     minDate={this.props.minDate}
                     mode={this.props.mode}
                     unlimited={this.props.unlimited}
-                    widgetRef={el => this.widget = el}
+                    widgetRef={this.widgetRef}
                     selectedDate={this.state.selectedDate}
                     setSelectedMonth={this.setSelectedMonth}
                     setSelectedDate={this.setSelectedDate}
