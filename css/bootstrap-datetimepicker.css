@@ -284,20 +284,12 @@
 .bootstrap-datetimepicker-widget .btn-today{
   padding: 3px 0;
 }
-.bootstrap-datetimepicker-widget.bottom {
-  top: 100%;
-  bottom: unset;
-}
 
 .bootstrap-datetimepicker-widget.bottom.dropdown-menu {
   margin-top: 6px;
 }
 
-.bootstrap-datetimepicker-widget.top {
-  top: unset;
-  bottom: 100%;
-}
-
 .bootstrap-datetimepicker-widget.top.dropdown-menu {
   margin-bottom: 6px;
+  margin-top: 0;
 }

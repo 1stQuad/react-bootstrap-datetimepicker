@@ -44,7 +44,7 @@ export default class DateTimePicker extends Component {
         widgetClasses: PropTypes.object,
         widgetStyle: PropTypes.object,
         togglePicker: PropTypes.func,
-        widgetRef: PropTypes.func,
+        widgetRef: PropTypes.object,
         setSelectedHour: PropTypes.func,
         setSelectedMinute: PropTypes.func,
         setToday: PropTypes.func,
