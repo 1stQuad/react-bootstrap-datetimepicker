@@ -141,7 +141,8 @@ export default class DateTimeField extends Component {
         tabIndex: PropTypes.string,
         validationClass: PropTypes.string,
         startOfWeek: PropTypes.string,
-        availableDates: PropTypes.arrayOf(PropTypes.object)
+        availableDates: PropTypes.arrayOf(PropTypes.object),
+        widgetContainerId: PropTypes.string
     };
 
     componentWillReceiveProps = nextProps => {
@@ -680,6 +681,7 @@ export default class DateTimeField extends Component {
                     showPicker={this.state.showPicker}
                     startOfWeek={this.props.startOfWeek}
                     availableDatesStringArray={this.state.availableDatesStringArray}
+                    widgetContainerId={this.props.widgetContainerId}
                 />
                 <div
                     className={classnames('date ', {

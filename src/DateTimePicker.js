@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import DateTimePickerDate from './DateTimePickerDate.js';
@@ -50,7 +51,8 @@ export default class DateTimePicker extends Component {
         setToday: PropTypes.func,
         calculatePosition: PropTypes.func,
         startOfWeek: PropTypes.string,
-        availableDatesStringArray: PropTypes.arrayOf(PropTypes.string)
+        availableDatesStringArray: PropTypes.arrayOf(PropTypes.string),
+        widgetContainerId: PropTypes.string,
     };
 
     renderDatePicker = () => {
@@ -164,15 +166,51 @@ export default class DateTimePicker extends Component {
         if (this.props.disabled) return ('');
 
         return (
-            <div ref={this.props.widgetRef} className={widgetClass} style={this.props.widgetStyle}>
-                <ul className="list-unstyled">
-                    {this.renderDatePicker()}
+            <DateTimePickerPortal widgetContainerId={this.props.widgetContainerId}>
+                <div ref={this.props.widgetRef} className={widgetClass} style={this.props.widgetStyle}>
+                    <ul className="list-unstyled">
+                        {this.renderDatePicker()}
 
-                    {this.renderSwitchButton()}
+                        {this.renderSwitchButton()}
 
-                    {this.renderTimePicker()}
-                </ul>
-            </div>
+                        {this.renderTimePicker()}
+                    </ul>
+                </div>
+            </DateTimePickerPortal>
         );
+    }
+}
+
+class DateTimePickerPortal extends Component {
+    static propTypes = {
+        widgetContainerId: PropTypes.string
+    };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            container: null
+        };
+    }
+
+    componentDidMount() {
+        this.updatePortalContainer();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.widgetContainerId !== this.props.widgetContainerId) {
+            this.updatePortalContainer();
+        }
+    }
+
+    updatePortalContainer() {
+        const containerElem = document.getElementById(this.props.widgetContainerId);
+        this.setState({
+            container: containerElem || document.body
+        });
+    }
+
+    render() {
+        return this.state.container ? ReactDOM.createPortal(this.props.children, this.state.container) : null;
     }
 }
