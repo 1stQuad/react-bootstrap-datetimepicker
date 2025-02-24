@@ -12,7 +12,7 @@ export default class DateTimePickerYears extends Component {
         setViewYear: PropTypes.func.isRequired,
         minDate: PropTypes.object,
         maxDate: PropTypes.object,
-        availableDatesStringArray: PropTypes.arrayOf(PropTypes.string)
+        availableDates: PropTypes.arrayOf(PropTypes.object)
     };
 
     renderYears = () => {
@@ -35,8 +35,8 @@ export default class DateTimePickerYears extends Component {
                 (maxDate && year > maxDate.year()),
             };
 
-            if(!classes.softDisabled && this.props.availableDatesStringArray.length > 0) {
-                if (this.props.availableDatesStringArray.indexOf(year.toString()) === -1)
+            if (!classes.softDisabled && this.props.availableDates.length > 0) {
+                if (this.props.availableDates.findIndex(d => d.getUTCFullYear() === year) === -1)
                     classes.softDisabled = true;
             }
 

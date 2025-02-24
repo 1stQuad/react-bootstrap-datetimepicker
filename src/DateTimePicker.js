@@ -51,7 +51,7 @@ export default class DateTimePicker extends Component {
         setToday: PropTypes.func,
         calculatePosition: PropTypes.func,
         startOfWeek: PropTypes.string,
-        availableDatesStringArray: PropTypes.arrayOf(PropTypes.string),
+        availableDates: PropTypes.arrayOf(PropTypes.object),
         widgetContainerId: PropTypes.string,
     };
 
@@ -81,7 +81,7 @@ export default class DateTimePicker extends Component {
                         calculatePosition={this.props.calculatePosition}
                         showPicker={this.props.showPicker}
                         startOfWeek={this.props.startOfWeek}
-                        availableDatesStringArray={this.props.availableDatesStringArray}
+                        availableDates={this.props.availableDates}
                     />
                 </li>
             );
